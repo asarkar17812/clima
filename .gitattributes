@@ -1,2 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+/source/census[[:space:]]demographic[[:space:]]files/nhgis0004_ds267_20235_blck_grp.csv filter=lfs diff=lfs merge=lfs -text
+/source/sci/county_county.tsv filter=lfs diff=lfs merge=lfs -text
+/source/shape[[:space:]]files/county/tl_2021_us_county.shp filter=lfs diff=lfs merge=lfs -text
