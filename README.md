@@ -12,9 +12,9 @@ CiviL Infrastructure research for climate change Mitigation and Adaptation (CLIM
 
 This leg of the CLIMA project is an interdisciplinary research project that aims to model the effects of flood risk on coastal communities through a detailed investigation of the social networks, as well as other factors, in an attempt to create a model that is more capable of capturing human mobility phenomena, especially amongst homeowners. By using a modified compartmental model, we can partition the population into sets and utilize the mean-field hypothesis to treat individuals as identical, thus allowing us to focus on the population's dynamics instead of individual-level cognition. That being said, to better appreciate the unique perspectives of individuals and communities that most directly face these threats, this project also seeks to include qualitative information about the network extracted through interviews with homeowners of coastal communities here, in NYC. Furthermore, demographic breakdowns of the sample coastal communities enable us to increase our understanding of the context and everyday lives of the homeowners within these communities and issues of inequity.
 
-This repo/notebook specifically focuses on the scaling of social connections with population in counties and CBSAs, and demographic analyses. Specifically. it contains the figures:
+This repo/notebook specifically focuses on the scaling of social connections with population in counties and CBSAs, and demographic analyses. Specifically, it contains the figures:
 
-* log-log Regression of (Social Connections) vs (Population)
+* Linear Regression of $log_{10}$(Social Connections) vs $log_{10}$(Population)
   * Rescaled & Normalized (*Schlapfer et. al*)
   * County & CBSA plots by network type
 * Choropleths:
@@ -30,7 +30,7 @@ This repo/notebook specifically focuses on the scaling of social connections wit
 
     * Inter-Covering, Outer-Coveirng, and Total CBSA Connections
     * Inter-Covering, Outer-Coveirng, and Total CBSA Connections per User and per Capita
-    * 
+    * Aggregated User, Population, and Coverage Estimates for CBSAs
 * Age/Sex Population Pyramids w/ NYC Averages (Selected Hamilton Beach Census Blocks)
 * Race/Ethnicity Distribution w/ NYC Averages (Selected Hamilton Beach Census Blocks)
 * Persons per Household (1-5+) Distribution w/ NYC Averages (Selected Hamilton Beach Census Blocks)
@@ -43,7 +43,9 @@ This repo/notebook specifically focuses on the scaling of social connections wit
 
 ---
 
-## References
+## References:
+
+---
 
 ### Meta SCI Resources
 
@@ -52,20 +54,14 @@ This repo/notebook specifically focuses on the scaling of social connections wit
 - [SCI Docs](https://data.humdata.org/dataset/e9988552-74e4-4ff4-943f-c782ac8bca87/resource/a0c37eb4-b45c-436d-b2b2-c0c9b1974318/download/documentation-fb-social-connectedness-index-october-2021.pdf)
 - [County-to-County SCI Dataset](https://data.humdata.org/dataset/e9988552-74e4-4ff4-943f-c782ac8bca87/resource/c59fd5ac-0458-4e83-b6be-5334f0ea9a69/download/us-counties-us-counties-fb-social-connectedness-index-october-2021.zip)
 
----
-
 ### Meta Official Regional Coverage Estimates
 
 - [Meta Q4 ’22 Earnings Presentation](https://s21.q4cdn.com/399680738/files/doc_financials/2023/q4/Earnings-Presentation-Q4-2023.pdf)
-
----
 
 ### ESRI Facebook User Estimates
 
 - [ESRI Data](https://nyuds.maps.arcgis.com/home/item.html?id=14a2fb32e22b4fe5ab9d884c9e994075)
 - [ESRI Documentation](https://demographics5.arcgis.com/arcgis/rest/services/USA_MPI_1_2022/MapServer/7)
-
----
 
 ### Crosswalk
 
@@ -74,6 +70,8 @@ This repo/notebook specifically focuses on the scaling of social connections wit
 ---
 
 ### Bibliography
+
+---
 
 1. Bailey, Michael, Rachel Cao, Theresa Kuchler, Johannes Stroebel, and Arlene Wong.**“Social Connectedness: Measurement, Determinants, and Effects.”***Journal of Economic Perspectives* 32, no. 3 (August 2018): 259–280.DOI: [10.1257/jep.32.3.259](https://doi.org/10.1257/jep.32.3.259)
 2. Schläpfer, M., Bettencourt, L. M. A., Grauwin, S., Raschke, M., Claxton, R., Smoreda, Z., West, G. B., & Ratti, C. (2014).
