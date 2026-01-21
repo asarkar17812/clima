@@ -30,7 +30,7 @@ This repo/notebook specifically focuses on the scaling of social connections wit
 
     * Inter-Covering, Outer-Coveirng, and Total CBSA Connections
     * Inter-Covering, Outer-Coveirng, and Total CBSA Connections per User and per Capita
-    * Aggregated County User, Population, and Coverage Estimates for CBSAs
+    * 
 * Age/Sex Population Pyramids w/ NYC Averages (Selected Hamilton Beach Census Blocks)
 * Race/Ethnicity Distribution w/ NYC Averages (Selected Hamilton Beach Census Blocks)
 * Persons per Household (1-5+) Distribution w/ NYC Averages (Selected Hamilton Beach Census Blocks)
@@ -39,8 +39,7 @@ This repo/notebook specifically focuses on the scaling of social connections wit
 
 ---
 
-![asarkar_nyu_ugsrp_poster](https://github.com/user-attachments/assets/de930506-2524-41f4-acb0-c01ba97a09e1)
-`<img width="1960" height="1356" alt="image" src="https://github.com/user-attachments/assets/6e5d7df8-118f-4973-a541-53b4318618a7" />`
+![asarkar_nyu_ugsrp_poster](https://github.com/user-attachments/assets/de930506-2524-41f4-acb0-c01ba97a09e1)![1769003772068](image/README/1769003772068.png)
 
 ---
 
