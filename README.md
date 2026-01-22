@@ -78,3 +78,10 @@ This repo/notebook specifically focuses on the scaling of social connections wit
    **The scaling of human interactions with city size.**
    *Journal of the Royal Society Interface*, **11**(98), 20130789.
    DOI: [10.1098/rsif.2013.0789](https://doi.org/10.1098/rsif.2013.0789)
+3. Simini, F., González, M., Maritan, A., et al.**A universal model for mobility and migration patterns.
+   **Nature** **484**, 96–100 (2012).
+   DOI: [10.1038/nature10856](https://doi.org/10.1038/nature10856)
+
+---
+
+al fin :]
