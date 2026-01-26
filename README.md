@@ -15,7 +15,7 @@ This leg of the CLIMA project is an interdisciplinary research project that aims
 This repo/notebook specifically focuses on the scaling of social connections with population in counties and CBSAs, and demographic analyses. Specifically, it contains the figures:
 
 * Linear Regression of $log_{10}$(Social Connections) vs $log_{10}$(Population)
-  * Rescaled & Normalized (*Schlapfer et. al*)
+  * Rescaled & Normalized (*[Schlapfer et. al](https://doi.org/10.1098/rsif.2013.0789)*)
   * County & CBSA plots by network type
 * Choropleths:
   * Inter-County, Outer-County, and Total County Connections per User and per Capita
@@ -28,8 +28,8 @@ This repo/notebook specifically focuses on the scaling of social connections wit
     * User, Population, and Coverage Estimates
   * CBSA:
 
-    * Inter-Covering, Outer-Coveirng, and Total CBSA Connections
-    * Inter-Covering, Outer-Coveirng, and Total CBSA Connections per User and per Capita
+    * Inter-Covering, Outer-Covering, and Total CBSA Connections
+    * Inter-Covering, Outer-Covering, and Total CBSA Connections per User and per Capita
     * Aggregated User, Population, and Coverage Estimates for CBSAs
 * Age/Sex Population Pyramids w/ NYC Averages (Selected Hamilton Beach Census Blocks)
 * Race/Ethnicity Distribution w/ NYC Averages (Selected Hamilton Beach Census Blocks)
