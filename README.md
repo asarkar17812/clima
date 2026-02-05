@@ -36,6 +36,7 @@ This repo/notebook specifically focuses on the scaling of social connections wit
 * Persons per Household (1-5+) Distribution w/ NYC Averages (Selected Hamilton Beach Census Blocks)
 * Housing Occupation Status Distribution w/ NYC Averages (Selected Hamilton Beach Census Blocks)
 * Housing Tenure Distribution w/ NYC Averages (Selected Hamilton Beach Census Blocks)
+* To learn more about the methodology and to run the code, please open clima.ipynb
 
 ---
 
@@ -73,12 +74,12 @@ This repo/notebook specifically focuses on the scaling of social connections wit
 
 ---
 
-1. Bailey, Michael, Rachel Cao, Theresa Kuchler, Johannes Stroebel, and Arlene Wong.**“Social Connectedness: Measurement, Determinants, and Effects.”***Journal of Economic Perspectives* 32, no. 3 (August 2018): 259–280.DOI: [10.1257/jep.32.3.259](https://doi.org/10.1257/jep.32.3.259)
+1. Bailey, Michael, Rachel Cao, Theresa Kuchler, Johannes Stroebel, and Arlene Wong. **“Social Connectedness: Measurement, Determinants, and Effects.”** *Journal of Economic Perspectives* 32, no. 3 (August 2018): 259–280.DOI: [10.1257/jep.32.3.259](https://doi.org/10.1257/jep.32.3.259)
 2. Schläpfer, M., Bettencourt, L. M. A., Grauwin, S., Raschke, M., Claxton, R., Smoreda, Z., West, G. B., & Ratti, C. (2014).
    **The scaling of human interactions with city size.**
    *Journal of the Royal Society Interface*, **11**(98), 20130789.
    DOI: [10.1098/rsif.2013.0789](https://doi.org/10.1098/rsif.2013.0789)
-3. Simini, F., González, M., Maritan, A., et al.**A universal model for mobility and migration patterns.
+3. Simini, F., González, M., Maritan, A., et al. **A universal model for mobility and migration patterns.**
    **Nature** **484**, 96–100 (2012).
    DOI: [10.1038/nature10856](https://doi.org/10.1038/nature10856)
 
