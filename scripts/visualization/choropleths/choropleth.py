@@ -1,12 +1,37 @@
-import pandas as pd 
-import numpy as np 
-import matplotlib.pyplot as plt 
+"""
+choropleth.py
+=============
+Render county- and CBSA-level choropleth maps for the social-connection
+variables produced by ``data_cleaning.py``.
+
+Outputs (written to ``plots/choropleths/``):
+
+- ``county_connections_choropleth.png``: Inter-, Outgoing, and Total
+  county connections on a log color scale.
+- ``county_popstats_choropleth.png``: County user-count estimates,
+  population estimates (both log), and coverage estimates (linear).
+- ``county_percapita_choropleth.png``: Connections per capita (linear).
+- ``county_peruser_choropleth.png``: Connections per Facebook MAU
+  (linear).
+
+Maps are restricted to the continental US (state FIPS in 01-56,
+excluding 02 Alaska, 15 Hawaii, and the non-state territories) so the
+default extent is a sensible CONUS view.
+"""
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
 import geopandas as gpd
 import matplotlib.ticker as mticker
 from esda.moran import Moran
 from matplotlib.ticker import FixedLocator, FixedFormatter, LogLocator, LogFormatter, ScalarFormatter
 from matplotlib.colors import Normalize, LogNorm
 
+# ----------------------------------------------------------------------
+# Load the cleaned county- and CBSA-level dataframes alongside the 2021
+# TIGER/Line shapefiles for the choropleth basemaps.
+# ----------------------------------------------------------------------
 df_inner_county = pd.read_csv('F:\\dsl_CLIMA\\submittable\\export\\df_outer_county.csv')
 df_cbsa = pd.read_csv('F:\\dsl_CLIMA\\submittable\\export\\df_cbsa.csv')
 df_msa = pd.read_csv('F:\\dsl_CLIMA\\submittable\\export\\df_msa.csv')
@@ -14,25 +39,29 @@ df_musa = pd.read_csv('F:\\dsl_CLIMA\\submittable\\export\\df_musa.csv')
 gdf_county = gpd.read_file('F:\\dsl_CLIMA\\submittable\\source\\shape files\\county\\tl_2021_us_county.shp')
 gdf_cbsa = gpd.read_file('F:\\dsl_CLIMA\\submittable\\source\\shape files\\cbsa\\tl_2021_us_cbsa.shp')
 
+# Force zero-padded string IDs so the dataframe joins do not silently
+# drop leading-zero FIPS / CBSA codes.
 df_inner_county['user_loc'] = df_inner_county['user_loc'].astype(str).str.zfill(5)
 df_cbsa['CBSA Code'] = df_cbsa['CBSA Code'].astype(str).str.zfill(5)
 
-gdf_county['user_loc'] = (gdf_county['STATEFP'].str.zfill(2)+ gdf_county['COUNTYFP'].str.zfill(3))
+gdf_county['user_loc'] = gdf_county['STATEFP'].str.zfill(2) + gdf_county['COUNTYFP'].str.zfill(3)
 gdf_cbsa.rename(columns={'GEOID': 'CBSA Code'}, inplace=True)
 gdf_cbsa['CBSA Code'] = gdf_cbsa['CBSA Code'].astype(str).str.zfill(5)
 
+# Merge the variables of interest onto the polygon geodataframes.
 gdf_county = gdf_county.merge(df_inner_county, on='user_loc', how='left')
 gdf_county = gpd.GeoDataFrame(gdf_county, geometry='geometry', crs='EPSG:4326')
 
 gdf_cbsa = gdf_cbsa.merge(df_cbsa, on='CBSA Code', how='left')
 gdf_cbsa = gpd.GeoDataFrame(gdf_cbsa, geometry='geometry', crs='EPSG:4326')
 
+
 def plot_choropleth_per_subplot(
     gdf,
     value_cols,
     titles=None,
-    log_scale_cols=None,        # Data log-transform
-    force_log_cols=None,        # Force visual log colorbar on linear data
+    log_scale_cols=None,
+    force_log_cols=None,
     cmap="viridis",
     missing_color="lightgrey",
     edgecolor="white",
@@ -42,10 +71,58 @@ def plot_choropleth_per_subplot(
     zoom_padding=0.05,
     cbar_height=0.025,
     cbar_pad=0.012,
-    cbar_width_ratio=0.75,      # width ratio of colorbar relative to subplot
+    cbar_width_ratio=0.75,
     linear_ticks=6,
     log_ticks_per_decade=1
 ):
+    """Render a grid of choropleth subplots from a single GeoDataFrame.
+
+    Each subplot maps one column from ``value_cols`` and gets its own
+    horizontal colorbar positioned beneath the panel. Columns named in
+    ``log_scale_cols`` are log-transformed before plotting (the colorbar
+    ticks still display the original units). Columns named in
+    ``force_log_cols`` are plotted on a linear scale but receive a
+    log-spaced colorbar; this is useful when the underlying data has
+    been pre-rescaled but a log-style colorbar reads better.
+
+    Parameters
+    ----------
+    gdf : geopandas.GeoDataFrame
+        Source geodataframe; must contain a ``geometry`` column and a
+        ``STATEFP`` or ``GEOID`` column if ``continental_only=True``.
+    value_cols : list of str
+        Column names to map, in subplot order.
+    titles : list of str, optional
+        Per-subplot titles. Defaults to ``value_cols``.
+    log_scale_cols : list of str, optional
+        Columns whose values are log10-transformed before plotting.
+    force_log_cols : list of str, optional
+        Columns whose colorbars get log-style ticks regardless of
+        whether the underlying data was log-transformed.
+    cmap : str, default "viridis"
+        Matplotlib colormap.
+    missing_color : str, default "lightgrey"
+        Color for GEOIDs with missing values.
+    edgecolor, linewidth : str, float
+        Polygon outline styling.
+    figsize_per_plot : float
+        Size in inches allocated to each subplot.
+    continental_only : bool, default True
+        If True, filter to CONUS state FIPS only.
+    zoom_padding : float, default 0.05
+        Fraction of total bounds shaved off each edge to zoom in.
+    cbar_height, cbar_pad, cbar_width_ratio : float
+        Colorbar geometry parameters.
+    linear_ticks : int, default 6
+        Number of ticks on linear colorbars.
+    log_ticks_per_decade : float
+        Density of ticks on log colorbars (1 = one per decade).
+
+    Returns
+    -------
+    fig : matplotlib.figure.Figure
+    axes : ndarray of matplotlib.axes.Axes
+    """
     if titles is None:
         titles = value_cols
     if log_scale_cols is None:
@@ -97,18 +174,17 @@ def plot_choropleth_per_subplot(
         data = gdf_plot[col].replace(0, np.nan)
         vmin, vmax = data.min(), data.max()
 
-        # ---- Determine data for plotting ----
+        # Log-transform data if requested; otherwise plot linearly.
+        # ``is_log`` controls only the colorbar tick formatting.
         if col in log_scale_cols:
-            # log-transform data for plotting
             plot_data = np.where(data > 0, np.log10(data), np.nan)
             norm = Normalize(vmin=np.nanmin(plot_data), vmax=np.nanmax(plot_data))
             is_log = True
         else:
             plot_data = data
             norm = Normalize(vmin=vmin, vmax=vmax)
-            is_log = col in force_log_cols  # for colorbar only
+            is_log = col in force_log_cols
 
-        # ---- Plot
         gdf_plot.plot(
             column=plot_data,
             ax=ax,
@@ -124,13 +200,12 @@ def plot_choropleth_per_subplot(
         ax.set_ylim(bounds[1], bounds[3])
         ax.axis("off")
 
-        # ---- Colorbar below subplot ----
+        # ---- Colorbar positioned just below each subplot ----
         pos = ax.get_position()
         width = pos.width * cbar_width_ratio
         x0 = pos.x0 + (pos.width - width) / 2
         cax = fig.add_axes([x0, pos.y0 - cbar_pad - cbar_height, width, cbar_height])
 
-        # Create colormap for colorbar
         sm = plt.cm.ScalarMappable(cmap=cmap, norm=norm)
         cbar = plt.colorbar(sm, cax=cax, orientation="horizontal")
         cbar.ax.xaxis.get_offset_text().set_visible(False)
@@ -139,7 +214,7 @@ def plot_choropleth_per_subplot(
 
         # ---- Tick formatting ----
         if col in log_scale_cols:
-            # Data is log-transformed, but show original values
+            # Data is log-transformed; show original units on the ticks.
             log_ticks = np.logspace(np.floor(np.log10(vmin)),
                                     np.ceil(np.log10(vmax)),
                                     int((np.ceil(np.log10(vmax)) - np.floor(np.log10(vmin))) * log_ticks_per_decade + 1))
@@ -149,31 +224,35 @@ def plot_choropleth_per_subplot(
             cbar.ax.xaxis.set_major_formatter(FixedFormatter(labels))
 
         elif col in force_log_cols:
-            # Linear data, forced log colorbar
+            # Linear data, but the colorbar is forced onto a log scale
+            # so the ticks read as 1, 10, 100, etc. in original units.
             log_ticks = np.logspace(np.floor(np.log10(vmin)),
                                     np.ceil(np.log10(vmax)),
                                     int((np.ceil(np.log10(vmax)) - np.floor(np.log10(vmin))) * log_ticks_per_decade + 1))
             log_ticks = log_ticks[(log_ticks >= vmin) & (log_ticks <= vmax)]
-            # Map ticks to normalized 0-1 for colorbar
             log_norm_ticks = (np.log10(log_ticks) - np.log10(vmin)) / (np.log10(vmax) - np.log10(vmin))
             labels = [f"{int(t):,}" for t in log_ticks]
             cbar.ax.xaxis.set_major_locator(FixedLocator(log_norm_ticks * (cbar.ax.get_xlim()[1] - cbar.ax.get_xlim()[0]) + cbar.ax.get_xlim()[0]))
             cbar.ax.xaxis.set_major_formatter(FixedFormatter(labels))
 
         else:
-            # Linear data
+            # Linear data, linear colorbar.
             ticks = np.linspace(vmin, vmax, linear_ticks)
             labels = [f"{t:.2f}" if t < 10 else f"{int(t)}" for t in ticks]
             cbar.ax.xaxis.set_major_locator(FixedLocator(ticks))
             cbar.ax.xaxis.set_major_formatter(FixedFormatter(labels))
 
-    # Hide unused axes
+    # Hide unused axes when ``n`` doesn't fill the grid.
     for ax in axes[n:]:
         ax.axis("off")
 
     return fig, axes
 
-# --- County Choropleths ---
+
+# ----------------------------------------------------------------------
+# County-level connection choropleths (log color scale).
+# These show absolute Inter-, Outgoing, and Total connection counts.
+# ----------------------------------------------------------------------
 fig, axes = plot_choropleth_per_subplot(
     gdf=gdf_county,
     value_cols=[
@@ -198,6 +277,11 @@ fig, axes = plot_choropleth_per_subplot(
 plt.show()
 fig.savefig("F:\\dsl_CLIMA\\submittable\\plots\\choropleths\\county_connections_choropleth.png", dpi=800, bbox_inches='tight')
 
+# ----------------------------------------------------------------------
+# User-count, population, and coverage choropleths.
+# User counts and population are log-scaled because they span ~6
+# decades; coverage is linear because it sits in [0.34, 0.63].
+# ----------------------------------------------------------------------
 fig, axes = plot_choropleth_per_subplot(
     gdf=gdf_county,
     value_cols=[
@@ -211,7 +295,7 @@ fig, axes = plot_choropleth_per_subplot(
         "County Coverage Estimates"
     ],
     log_scale_cols=['user_est', 'pop_est'],
-    force_log_cols=['user_est','pop_est'],
+    force_log_cols=['user_est', 'pop_est'],
     cmap="viridis",
     continental_only=True,
     zoom_padding=-0.075,
@@ -224,17 +308,25 @@ fig, axes = plot_choropleth_per_subplot(
 plt.show()
 fig.savefig("F:\\dsl_CLIMA\\submittable\\plots\\choropleths\\county_popstats_choropleth.png", dpi=800, bbox_inches='tight')
 
-gdf_county['inter_county_connections per capita'] = gdf_county['inter_county_connections']/gdf_county['pop_est']
-gdf_county['inter_county_connections per user'] = gdf_county['inter_county_connections']/gdf_county['user_est']
+# ----------------------------------------------------------------------
+# Per-capita and per-user connection columns.
+# Computed in-place on ``gdf_county`` for both the percapita and peruser
+# choropleths below.
+# ----------------------------------------------------------------------
+gdf_county['inter_county_connections per capita'] = gdf_county['inter_county_connections'] / gdf_county['pop_est']
+gdf_county['inter_county_connections per user'] = gdf_county['inter_county_connections'] / gdf_county['user_est']
 
-gdf_county['outer_county_connections per capita'] = gdf_county['outer_county_connections']/gdf_county['pop_est']
-gdf_county['outer_county_connections per user'] = gdf_county['outer_county_connections']/gdf_county['user_est']
+gdf_county['outer_county_connections per capita'] = gdf_county['outer_county_connections'] / gdf_county['pop_est']
+gdf_county['outer_county_connections per user'] = gdf_county['outer_county_connections'] / gdf_county['user_est']
 
-gdf_county['total connections per capita'] = gdf_county['total connections']/gdf_county['pop_est']
-gdf_county['total connections per user'] = gdf_county['total connections']/gdf_county['user_est']
+gdf_county['total connections per capita'] = gdf_county['total connections'] / gdf_county['pop_est']
+gdf_county['total connections per user'] = gdf_county['total connections'] / gdf_county['user_est']
 
 
-# --- Per User and Per Capita Choropleths ---
+# ----------------------------------------------------------------------
+# Per-capita choropleths. Linear scale because the per-capita normalizer
+# already strips out the population-driven baseline.
+# ----------------------------------------------------------------------
 fig, axes = plot_choropleth_per_subplot(
     gdf=gdf_county,
     value_cols=[
@@ -259,6 +351,10 @@ plt.show()
 fig.savefig("F:\\dsl_CLIMA\\submittable\\plots\\choropleths\\county_percapita_choropleth.png", dpi=800, bbox_inches='tight')
 
 
+# ----------------------------------------------------------------------
+# Per-user choropleths. This is the post-coverage-rescaling view: any
+# remaining geographic structure here is not driven by population size.
+# ----------------------------------------------------------------------
 fig, axes = plot_choropleth_per_subplot(
     gdf=gdf_county,
     value_cols=[

@@ -1,22 +1,62 @@
-import pandas as pd 
-import numpy as np 
+"""
+histograms.py
+=============
+Generate histogram + KDE + parametric-PDF comparison figures for the
+connection / user / population / coverage variables produced by
+``data_cleaning.py``.
+
+For each variable, the plot stacks:
+
+- A density histogram with Freedman-Diaconis bin width (capped at
+  ``bin_max``).
+- 25th- and 75th-percentile shading on the histogram patches so the
+  central 50% of the distribution reads at a glance.
+- A Gaussian-kernel KDE as the non-parametric reference PDF.
+- Parametric overlays: Normal, SkewNormal, LogNormal (when the data is
+  log-transformed), and a Generalized Pareto fit to the top-75% tail
+  (i.e. values above the 25th percentile).
+- A stats panel reporting RMSE of each parametric PDF vs. the KDE at the
+  bin centers, plus the mean / median / variance of the data.
+
+Outputs (written to ``plots/histograms/``):
+
+- ``connectivity/sci/sci_histograms.png``: County-level SCI distributions.
+- ``connectivity/connections/{county,cbsa,msa,musa}_connections_histograms.png``:
+  Connection-count distributions at each GEOID level.
+- ``per_capita & per_user/{county,cbsa,msa,musa}_connections_histograms.png``:
+  Connections-per-capita and connections-per-user distributions.
+"""
+
+import pandas as pd
+import numpy as np
 import math
-import matplotlib.pyplot as plt 
+import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 from matplotlib.patches import Patch
 from scipy.stats import lognorm, skewnorm, genpareto, norm, gaussian_kde
 
+# ----------------------------------------------------------------------
+# Load cleaned dataframes plus the raw SCI table. The raw SCI is needed
+# for the first histogram block (county-level SCI distributions); the
+# others only need the cleaned exports.
+# ----------------------------------------------------------------------
 df_inner_county = pd.read_csv('F:\\dsl_CLIMA\\submittable\\export\\df_outer_county.csv')
 df_cbsa = pd.read_csv('F:\\dsl_CLIMA\\submittable\\export\\df_cbsa.csv')
 df_msa = pd.read_csv('F:\\dsl_CLIMA\\submittable\\export\\df_msa.csv')
 df_musa = pd.read_csv('F:\\dsl_CLIMA\\submittable\\export\\df_musa.csv')
-df_sci = pd.read_table('F:\\dsl_CLIMA\\submittable\\source\\sci\\county_county.tsv', dtype={'user_loc':str, 'fr_loc':str, 'scaled_sci':int})
+df_sci = pd.read_table('F:\\dsl_CLIMA\\submittable\\source\\sci\\county_county.tsv', dtype={'user_loc': str, 'fr_loc': str, 'scaled_sci': int})
 
-# Helper function to arrange subplots in a rectangular format
+
 def near_square_grid(k, min_cols=3):
+    """Return ``(rows, cols)`` for laying out ``k`` subplots near-square.
+
+    Forces at least ``min_cols`` columns so that single-row layouts stay
+    horizontally oriented.
+    """
     cols = max(min_cols, math.ceil(np.sqrt(k)))
     rows = math.ceil(k / cols)
     return rows, cols
+
 
 def plot_histograms_with_pdfs_kde(
     dfs, cols, titles=None, x_labels=None, log_x=False, no_log_cols=None,
@@ -26,6 +66,49 @@ def plot_histograms_with_pdfs_kde(
     bin_max=None,
     kde_max=None
 ):
+    """Plot density histograms with KDE + parametric overlays in a grid.
+
+    Each subplot takes one ``(df, col)`` pair from ``dfs`` and ``cols``,
+    builds a density histogram of ``df[col]``, overlays a Gaussian KDE,
+    and fits a panel of parametric PDFs (Normal, SkewNormal, optionally
+    LogNormal, and a Generalized Pareto for the top tail). Each
+    parametric is scored against the KDE by RMSE at the bin centers and
+    the scores are written into a per-subplot stats box.
+
+    Parameters
+    ----------
+    dfs : list of pandas.DataFrame
+        One source dataframe per subplot.
+    cols : list of str
+        Column to plot from each dataframe.
+    titles, x_labels : list of str, optional
+        Per-subplot titles and x-axis labels. Default to ``cols``.
+    log_x : bool, default False
+        If True, log10-transform each column before binning.
+    no_log_cols : list of str or int, optional
+        Column names or indices for which to override ``log_x=True`` to
+        False (e.g. the linear coverage column when everything else is
+        log-transformed).
+    figsize_per_plot : float
+        Inches allocated per subplot.
+    bar_padding : float
+        Vertical padding for the horizontal separator lines between
+        subplot rows.
+    title_fontsize, stats_fontsize, legend_fontsize : int
+        Font sizes for title, stats box, and legend respectively.
+    box_alpha : float
+        Alpha for the stats-box background.
+    bin_max : int, optional
+        Cap on Freedman-Diaconis bin count.
+    kde_max : int, optional
+        If the data exceeds ``kde_max`` points, subsample to that size
+        before fitting the KDE (the KDE fitter scales poorly otherwise).
+
+    Returns
+    -------
+    fig : matplotlib.figure.Figure
+    axes : ndarray of matplotlib.axes.Axes
+    """
     if titles is None:
         titles = cols
     if x_labels is None:
@@ -47,6 +130,8 @@ def plot_histograms_with_pdfs_kde(
     ):
 
         # ---------- Data handling ----------
+        # Decide whether this column gets log-transformed; ``no_log_cols``
+        # lets the caller override on a per-column basis (e.g. coverage).
         raw_data = df_sub[col].dropna().values
 
         use_log = log_x
@@ -66,11 +151,11 @@ def plot_histograms_with_pdfs_kde(
 
         mean_val = np.mean(data)
         median_val = np.median(data)
-        variance_val = np.var(data) 
+        variance_val = np.var(data)
         q25, q75 = np.percentile(data, [25, 75])
 
-        # ---------- Freedman–Diaconis bins (capped) ----------
-        h = 2 * (q75 - q25) / len(data) ** (1/3)
+        # ---------- Freedman-Diaconis bins (capped at ``bin_max``) ----------
+        h = 2 * (q75 - q25) / len(data) ** (1 / 3)
         if h <= 0 or not np.isfinite(h):
             bins = 'auto'
         else:
@@ -80,17 +165,17 @@ def plot_histograms_with_pdfs_kde(
             bins = min(bins, bin_max)
 
         counts, bin_edges, patches = ax.hist(
-        data,
-        bins=bins,
-        density=True,
-        alpha=0.6,
-        color='skyblue',
-        edgecolor='black'
+            data,
+            bins=bins,
+            density=True,
+            alpha=0.6,
+            color='skyblue',
+            edgecolor='black'
         )
 
         bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
 
-        # ---------- Percentile shading ----------
+        # ---------- Percentile shading on the histogram patches ----------
         for i, patch in enumerate(patches):
             if bin_centers[i] <= q25:
                 patch.set_facecolor('lightcoral')
@@ -99,12 +184,11 @@ def plot_histograms_with_pdfs_kde(
                 patch.set_facecolor('plum')
                 patch.set_alpha(0.4)
 
-        # ---------- KDE (subsampled) ----------
+        # ---------- KDE (subsampled for tractability) ----------
         if kde_max is not None and len(data) > kde_max:
             kde_data = np.random.choice(data, kde_max, replace=False)
         else:
             kde_data = data
-
 
         kde = gaussian_kde(kde_data)
         x_kde = np.linspace(data.min(), data.max(), 500)
@@ -120,6 +204,9 @@ def plot_histograms_with_pdfs_kde(
         a, loc_sn, scale_sn = skewnorm.fit(data)
         fitted_pdfs['SkewNormal'] = skewnorm.pdf(bin_centers, a, loc_sn, scale_sn)
 
+        # LogNormal only makes sense on log-transformed data; the
+        # change-of-variables factor np.log(10) * 10**bin_centers maps
+        # the PDF back to the log10 axis.
         if use_log:
             shape, loc, scale = lognorm.fit(raw_data, floc=0)
             fitted_pdfs['LogNormal'] = (
@@ -128,7 +215,11 @@ def plot_histograms_with_pdfs_kde(
                 * 10**bin_centers
             )
 
-        # ---------- Tail detection & GenPareto ----------
+        # ---------- Tail detection and Generalized Pareto fit ----------
+        # Fit GenPareto on the top 75% tail (values above the 25th
+        # percentile). ``tail_side`` picks which side of the plot has
+        # more headroom so the legend / stats box doesn't collide with
+        # the tail.
         tail_q = 25
         u = np.percentile(raw_data, tail_q)
         tail_raw = raw_data[raw_data > u] - u
@@ -157,11 +248,11 @@ def plot_histograms_with_pdfs_kde(
             gp_full[tail_mask] = pdf_gp
             fitted_pdfs['GenPareto (25% Tail)'] = gp_full
 
-        # ---------- Plot PDFs ----------
+        # ---------- Plot all parametric PDFs ----------
         for name, pdf in fitted_pdfs.items():
             ax.plot(bin_centers, pdf, lw=2, label=name)
 
-        # ---------- RMSE vs KDE ----------
+        # ---------- Goodness-of-fit (RMSE vs. KDE at bin centers) ----------
         kde_vals = kde(bin_centers)
         metrics = {
             name: np.sqrt(np.mean((pdf - kde_vals) ** 2))
@@ -179,7 +270,7 @@ def plot_histograms_with_pdfs_kde(
         ax.scatter(mean_val, kde(mean_val), color='red', s=80, zorder=5, label='Mean')
         ax.scatter(median_val, kde(median_val), color='darkgreen', s=80, zorder=5, label='Median')
 
-        # ---------- Legend & stats ----------
+        # ---------- Legend and stats panel placement ----------
         if tail_side == 'right':
             stats_x, stats_ha = 0.02, 'left'
             legend_loc = 'upper left'
@@ -191,19 +282,17 @@ def plot_histograms_with_pdfs_kde(
             facecolor='skyblue',
             edgecolor='black',
             alpha=0.6,
-            label='Histogram (25–75%)'
+            label='Histogram (25-75%)'
         )
 
-        # Get existing handles FIRST
         handles, labels = ax.get_legend_handles_labels()
 
-        # Now construct legend entries explicitly
         handles = (
             [hist_proxy]
             + handles
             + [
-                Patch(facecolor='lightcoral', edgecolor='black', label='≤25th percentile'),
-                Patch(facecolor='plum', edgecolor='black', label='≥75th percentile')
+                Patch(facecolor='lightcoral', edgecolor='black', label='<=25th percentile'),
+                Patch(facecolor='plum', edgecolor='black', label='>=75th percentile')
             ]
         )
 
@@ -230,7 +319,7 @@ def plot_histograms_with_pdfs_kde(
             bbox=dict(facecolor='white', alpha=box_alpha, edgecolor='black')
         )
 
-        # ---------- Labels ----------
+        # ---------- Axis labels ----------
         ax.set_title(title, fontsize=title_fontsize, pad=5)
         ax.set_xlabel(f"$\log_{{10}}$({xlabel})" if use_log else xlabel, fontsize=12)
         if use_log:
@@ -240,20 +329,14 @@ def plot_histograms_with_pdfs_kde(
 
     for ax in axes[k:]:
         ax.axis('off')
-    
-    # ---------- Horizontal separators between rows ----------
+
+    # ---------- Horizontal separators between subplot rows ----------
     for row in range(1, rows):
-        # Get all axes in the row above
-        axes_above = axes[(row - 1)*cols_n : row*cols_n]
-
-        # Find the bottom y-coordinate of the row above
-        # We'll take the minimum y0 among axes in that row
+        axes_above = axes[(row - 1) * cols_n: row * cols_n]
         y_bottom = min(ax.get_position().y0 for ax in axes_above)
-
-        # Create a line spanning the full figure width
         line = Line2D(
-            [0, 1],             # x from left to right of figure
-            [y_bottom - bar_padding - 0.0255],  # slightly below bottom of row
+            [0, 1],
+            [y_bottom - bar_padding - 0.0255],
             transform=fig.transFigure,
             color='black',
             linewidth=1.5,
@@ -264,9 +347,14 @@ def plot_histograms_with_pdfs_kde(
     return fig, axes
 
 
-### ------------ Connectivity & User Count histograms ------------ ###
+# ----------------------------------------------------------------------
+# Connectivity and user-count histograms.
+# ----------------------------------------------------------------------
 
-# --- County-level SCI histograms ---
+# County-level SCI histograms.
+# Dedup the directed SCI by (min, max) of the pair so each county pair
+# contributes once; then split into within-county (endo) and cross-county
+# (exo) subsets for the per-network-type panels.
 df_dedup = (
     df_sci
     .assign(
@@ -280,11 +368,13 @@ df_endo = (df_dedup[df_dedup['user_loc'] == df_dedup['fr_loc']]).copy()
 df_exo = (df_dedup[df_dedup['user_loc'] != df_dedup['fr_loc']]).copy()
 
 fig, axes = plot_histograms_with_pdfs_kde(
-    dfs = [df_endo, df_exo, df_dedup],
+    dfs=[df_endo, df_exo, df_dedup],
     cols=['scaled_sci', 'scaled_sci', 'scaled_sci'],
-    titles=
-        ['$\log_{10}$(Inner-County SCI) per County', '$\log_{10}$(Outgoing County SCI) per County', 
-         '$\log_{10}$(Total County SCI) per County'],
+    titles=[
+        '$\log_{10}$(Inner-County SCI) per County',
+        '$\log_{10}$(Outgoing County SCI) per County',
+        '$\log_{10}$(Total County SCI) per County'
+    ],
     x_labels=['Inner-County SCI', 'Outgoing County SCI', 'Total County SCI'],
     log_x=True,
     figsize_per_plot=5,
@@ -298,15 +388,20 @@ fig, axes = plot_histograms_with_pdfs_kde(
 plt.show()
 fig.savefig("F:\\dsl_CLIMA\\submittable\\plots\\histograms\\connectivity\\sci\\sci_histograms.png", dpi=800, bbox_inches='tight')
 
-# --- County-level Connection histograms ---
+# County-level connection histograms (six panels: three connection types
+# plus user, population, and coverage marginals).
 fig, axes = plot_histograms_with_pdfs_kde(
-    dfs=[df_inner_county]*6,
+    dfs=[df_inner_county] * 6,
     cols=['inter_county_connections', 'outer_county_connections', 'total connections', 'user_est', 'pop_est', 'coverage est'],
-    titles=
-        ['$\log_{10}$(Inner-County Connections) per County', '$\log_{10}$(Outgoing County Connections) per County', 
-         '$\log_{10}$(Total County Connections) per County', '$\log_{10}$(User Estimate) per County', 
-         '$\log_{10}$(Population Estimate) per County', 'Coverage Estimate per County'],
-    x_labels=['Inner-County Connections', 'Outgoing County Connections', 'Total County Connections', 
+    titles=[
+        '$\log_{10}$(Inner-County Connections) per County',
+        '$\log_{10}$(Outgoing County Connections) per County',
+        '$\log_{10}$(Total County Connections) per County',
+        '$\log_{10}$(User Estimate) per County',
+        '$\log_{10}$(Population Estimate) per County',
+        'Coverage Estimate per County'
+    ],
+    x_labels=['Inner-County Connections', 'Outgoing County Connections', 'Total County Connections',
               'County User Estimates', 'County Population Estimates', 'County Coverage Estimates'],
     no_log_cols=['coverage est'],
     log_x=True,
@@ -319,16 +414,20 @@ fig, axes = plot_histograms_with_pdfs_kde(
 plt.show()
 fig.savefig("F:\\dsl_CLIMA\\submittable\\plots\\histograms\\connectivity\\connections\\county_connections_histograms.png", dpi=800, bbox_inches='tight')
 
-# --- CBSA-level Connection, User, Population, & Coverage Estimate histograms ---
+# CBSA-level connection histograms (combined Metropolitan + Micropolitan).
 fig, axes = plot_histograms_with_pdfs_kde(
-    dfs=[df_cbsa]*6,
+    dfs=[df_cbsa] * 6,
     cols=['total inter_cbsa connections', 'outer_cbsa_connections', 'total connections',
           'user_est', 'pop_est', 'coverage est'],
-    titles=
-        ['$\log_{10}$(Inner-CBSA Connections) per CBSA', '$\log_{10}$(Outgoing CBSA Connections) per CBSA', 
-         '$\log_{10}$(Total CBSA Connections) per CBSA', '$\log_{10}$(User Estimate) per CBSA', 
-         '$\log_{10}$(Population Estimate) per CBSA', 'Coverage Estimate per CBSA'],
-    x_labels=['Inner-CBSA Connections', 'Outgoing CBSA Connections', 'Total CBSA Connections', 
+    titles=[
+        '$\log_{10}$(Inner-CBSA Connections) per CBSA',
+        '$\log_{10}$(Outgoing CBSA Connections) per CBSA',
+        '$\log_{10}$(Total CBSA Connections) per CBSA',
+        '$\log_{10}$(User Estimate) per CBSA',
+        '$\log_{10}$(Population Estimate) per CBSA',
+        'Coverage Estimate per CBSA'
+    ],
+    x_labels=['Inner-CBSA Connections', 'Outgoing CBSA Connections', 'Total CBSA Connections',
               'CBSA User Estimates', 'CBSA Population Estimates', 'CBSA Coverage Estimates'],
     no_log_cols=['coverage est'],
     log_x=True,
@@ -341,16 +440,20 @@ fig, axes = plot_histograms_with_pdfs_kde(
 plt.show()
 fig.savefig("F:\\dsl_CLIMA\\submittable\\plots\\histograms\\connectivity\\connections\\cbsa_connections_histograms.png", dpi=800, bbox_inches='tight')
 
-# --- MSA-level Connection, User, Population, & Coverage Estimate histograms ---
+# MSA-only connection histograms.
 fig, axes = plot_histograms_with_pdfs_kde(
-    dfs=[df_cbsa]*6,
+    dfs=[df_cbsa] * 6,
     cols=['total inter_cbsa connections', 'outer_cbsa_connections', 'total connections',
           'user_est', 'pop_est', 'coverage est'],
-    titles=
-        ['$\log_{10}$(Inner-MSA Connections) per MSA', '$\log_{10}$(Outgoing MSA Connections) per MSA', 
-         '$\log_{10}$(Total MSA Connections) per MSA', '$\log_{10}$(User Estimate) per MSA', 
-         '$\log_{10}$(Population Estimate) per MSA', 'Coverage Estimate per MSA'],
-    x_labels=['Inner-MSA Connections', 'Outgoing MSA Connections', 'Total MSA Connections', 
+    titles=[
+        '$\log_{10}$(Inner-MSA Connections) per MSA',
+        '$\log_{10}$(Outgoing MSA Connections) per MSA',
+        '$\log_{10}$(Total MSA Connections) per MSA',
+        '$\log_{10}$(User Estimate) per MSA',
+        '$\log_{10}$(Population Estimate) per MSA',
+        'Coverage Estimate per MSA'
+    ],
+    x_labels=['Inner-MSA Connections', 'Outgoing MSA Connections', 'Total MSA Connections',
               'MSA User Estimates', 'MSA Population Estimates', 'MSA Coverage Estimates'],
     no_log_cols=['coverage est'],
     log_x=True,
@@ -363,16 +466,20 @@ fig, axes = plot_histograms_with_pdfs_kde(
 plt.show()
 fig.savefig("F:\\dsl_CLIMA\\submittable\\plots\\histograms\\connectivity\\connections\\msa_connections_histograms.png", dpi=800, bbox_inches='tight')
 
-# --- muSA-level Connection, User, Population, & Coverage Estimate histograms ---
+# muSA-only connection histograms.
 fig, axes = plot_histograms_with_pdfs_kde(
-    dfs=[df_cbsa]*6,
+    dfs=[df_cbsa] * 6,
     cols=['total inter_cbsa connections', 'outer_cbsa_connections', 'total connections',
           'user_est', 'pop_est', 'coverage est'],
-    titles=
-        ['$\log_{10}$(Inner-muSA Connections) per muSA', '$\log_{10}$(Outgoing muSA Connections) per muSA', 
-         '$\log_{10}$(Total muSA Connections) per muSA', '$\log_{10}$(User Estimate) per muSA', 
-         '$\log_{10}$(Population Estimate) per muSA', 'Coverage Estimate per muSA'],
-    x_labels=['Inner-muSA Connections', 'Outgoing muSA Connections', 'Total muSA Connections', 
+    titles=[
+        '$\log_{10}$(Inner-muSA Connections) per muSA',
+        '$\log_{10}$(Outgoing muSA Connections) per muSA',
+        '$\log_{10}$(Total muSA Connections) per muSA',
+        '$\log_{10}$(User Estimate) per muSA',
+        '$\log_{10}$(Population Estimate) per muSA',
+        'Coverage Estimate per muSA'
+    ],
+    x_labels=['Inner-muSA Connections', 'Outgoing muSA Connections', 'Total muSA Connections',
               'muSA User Estimates', 'muSA Population Estimates', 'muSA Coverage Estimates'],
     no_log_cols=['coverage est'],
     log_x=True,
@@ -385,56 +492,64 @@ fig, axes = plot_histograms_with_pdfs_kde(
 plt.show()
 fig.savefig("F:\\dsl_CLIMA\\submittable\\plots\\histograms\\connectivity\\connections\\musa_connections_histograms.png", dpi=800, bbox_inches='tight')
 
-### ------------ Connectivity per Capita/User Count histograms ------------ ###
+# ----------------------------------------------------------------------
+# Connectivity per-capita and per-user histograms.
+# ----------------------------------------------------------------------
 
-df_inner_county['inter_county_connections per capita'] = df_inner_county['inter_county_connections']/df_inner_county['pop_est']
-df_inner_county['inter_county_connections per user'] = df_inner_county['inter_county_connections']/df_inner_county['user_est']
+# Per-capita / per-user columns at the county level.
+df_inner_county['inter_county_connections per capita'] = df_inner_county['inter_county_connections'] / df_inner_county['pop_est']
+df_inner_county['inter_county_connections per user'] = df_inner_county['inter_county_connections'] / df_inner_county['user_est']
 
-df_inner_county['outer_county_connections per capita'] = df_inner_county['outer_county_connections']/df_inner_county['pop_est']
-df_inner_county['outer_county_connections per user'] = df_inner_county['outer_county_connections']/df_inner_county['user_est']
+df_inner_county['outer_county_connections per capita'] = df_inner_county['outer_county_connections'] / df_inner_county['pop_est']
+df_inner_county['outer_county_connections per user'] = df_inner_county['outer_county_connections'] / df_inner_county['user_est']
 
-df_inner_county['total connections per capita'] = df_inner_county['total connections']/df_inner_county['pop_est']
-df_inner_county['total connections per user'] = df_inner_county['total connections']/df_inner_county['user_est']
+df_inner_county['total connections per capita'] = df_inner_county['total connections'] / df_inner_county['pop_est']
+df_inner_county['total connections per user'] = df_inner_county['total connections'] / df_inner_county['user_est']
 
+# Per-capita / per-user columns at the CBSA level.
+df_cbsa['inter_cbsa_connections per capita'] = df_cbsa['total inter_cbsa connections'] / df_cbsa['pop_est']
+df_cbsa['inter_cbsa_connections per user'] = df_cbsa['total inter_cbsa connections'] / df_cbsa['user_est']
 
-df_cbsa['inter_cbsa_connections per capita'] = df_cbsa['total inter_cbsa connections']/df_cbsa['pop_est']
-df_cbsa['inter_cbsa_connections per user'] = df_cbsa['total inter_cbsa connections']/df_cbsa['user_est']
+df_cbsa['outer_cbsa_connections per capita'] = df_cbsa['outer_cbsa_connections'] / df_cbsa['pop_est']
+df_cbsa['outer_cbsa_connections per user'] = df_cbsa['outer_cbsa_connections'] / df_cbsa['user_est']
 
-df_cbsa['outer_cbsa_connections per capita'] = df_cbsa['outer_cbsa_connections']/df_cbsa['pop_est']
-df_cbsa['outer_cbsa_connections per user'] = df_cbsa['outer_cbsa_connections']/df_cbsa['user_est']
+df_cbsa['total connections per capita'] = df_cbsa['total connections'] / df_cbsa['pop_est']
+df_cbsa['total connections per user'] = df_cbsa['total connections'] / df_cbsa['user_est']
 
-df_cbsa['total connections per capita'] = df_cbsa['total connections']/df_cbsa['pop_est']
-df_cbsa['total connections per user'] = df_cbsa['total connections']/df_cbsa['user_est']
+# Per-capita / per-user columns at the MSA level.
+df_msa['inter_cbsa_connections per capita'] = df_msa['total inter_cbsa connections'] / df_msa['pop_est']
+df_msa['inter_cbsa_connections per user'] = df_msa['total inter_cbsa connections'] / df_msa['user_est']
 
+df_msa['outer_cbsa_connections per capita'] = df_msa['outer_cbsa_connections'] / df_msa['pop_est']
+df_msa['outer_cbsa_connections per user'] = df_msa['outer_cbsa_connections'] / df_msa['user_est']
 
-df_msa['inter_cbsa_connections per capita'] = df_msa['total inter_cbsa connections']/df_msa['pop_est']
-df_msa['inter_cbsa_connections per user'] = df_msa['total inter_cbsa connections']/df_msa['user_est']
+df_msa['total connections per capita'] = df_msa['total connections'] / df_msa['pop_est']
+df_msa['total connections per user'] = df_msa['total connections'] / df_msa['user_est']
 
-df_msa['outer_cbsa_connections per capita'] = df_msa['outer_cbsa_connections']/df_msa['pop_est']
-df_msa['outer_cbsa_connections per user'] = df_msa['outer_cbsa_connections']/df_msa['user_est']
+# Per-capita / per-user columns at the muSA level.
+df_musa['inter_cbsa_connections per capita'] = df_musa['total inter_cbsa connections'] / df_musa['pop_est']
+df_musa['inter_cbsa_connections per user'] = df_musa['total inter_cbsa connections'] / df_musa['user_est']
 
-df_msa['total connections per capita'] = df_msa['total connections']/df_msa['pop_est']
-df_msa['total connections per user'] = df_msa['total connections']/df_msa['user_est']
+df_musa['outer_cbsa_connections per capita'] = df_musa['outer_cbsa_connections'] / df_musa['pop_est']
+df_musa['outer_cbsa_connections per user'] = df_musa['outer_cbsa_connections'] / df_musa['user_est']
 
+df_musa['total connections per capita'] = df_musa['total connections'] / df_musa['pop_est']
+df_musa['total connections per user'] = df_musa['total connections'] / df_musa['user_est']
 
-df_musa['inter_cbsa_connections per capita'] = df_musa['total inter_cbsa connections']/df_musa['pop_est']
-df_musa['inter_cbsa_connections per user'] = df_musa['total inter_cbsa connections']/df_musa['user_est']
-
-df_musa['outer_cbsa_connections per capita'] = df_musa['outer_cbsa_connections']/df_musa['pop_est']
-df_musa['outer_cbsa_connections per user'] = df_musa['outer_cbsa_connections']/df_musa['user_est']
-
-df_musa['total connections per capita'] = df_musa['total connections']/df_musa['pop_est']
-df_musa['total connections per user'] = df_musa['total connections']/df_musa['user_est']
-
-# --- County-level Connection histograms ---
+# County-level per-capita and per-user histograms.
 fig, axes = plot_histograms_with_pdfs_kde(
-    dfs=[df_inner_county]*6,
-    cols=['inter_county_connections per capita', 'outer_county_connections per capita', 'total connections per capita', 'inter_county_connections per user', 'outer_county_connections per user', 'total connections per user'],
-    titles=
-        ['$\log_{10}$(Inner-County Connections per Capita) per County', '$\log_{10}$(Outgoing County Connections per Capita) per County', 
-         '$\log_{10}$(Total County Connections per Capita) per County', '$\log_{10}$(Inner-County Connections per User) per County', 
-         '$\log_{10}$(Outgoing County Connections per User) per County', '$\log_{10}$(Total County Connections per User) per County',],
-    x_labels=['Inner-County Connections per Capita', 'Outgoing County Connections per Capita', 'Total County Connections per Capita', 
+    dfs=[df_inner_county] * 6,
+    cols=['inter_county_connections per capita', 'outer_county_connections per capita', 'total connections per capita',
+          'inter_county_connections per user', 'outer_county_connections per user', 'total connections per user'],
+    titles=[
+        '$\log_{10}$(Inner-County Connections per Capita) per County',
+        '$\log_{10}$(Outgoing County Connections per Capita) per County',
+        '$\log_{10}$(Total County Connections per Capita) per County',
+        '$\log_{10}$(Inner-County Connections per User) per County',
+        '$\log_{10}$(Outgoing County Connections per User) per County',
+        '$\log_{10}$(Total County Connections per User) per County',
+    ],
+    x_labels=['Inner-County Connections per Capita', 'Outgoing County Connections per Capita', 'Total County Connections per Capita',
               'Inner-County Connections per User', 'Outgoing County Connections per User', 'Total County Connections per User'],
     log_x=True,
     figsize_per_plot=5,
@@ -446,16 +561,20 @@ fig, axes = plot_histograms_with_pdfs_kde(
 plt.show()
 fig.savefig("F:\\dsl_CLIMA\\submittable\\plots\\histograms\\per_capita & per_user\\county_connections_histograms.png", dpi=800, bbox_inches='tight')
 
-# --- CBSA-level Connection, User, Population, & Coverage Estimate histograms ---
+# CBSA-level per-capita and per-user histograms.
 fig, axes = plot_histograms_with_pdfs_kde(
-    dfs=[df_cbsa]*6,
+    dfs=[df_cbsa] * 6,
     cols=['inter_cbsa_connections per capita', 'outer_cbsa_connections per capita', 'total connections per capita',
           'inter_cbsa_connections per user', 'outer_cbsa_connections per user', 'total connections per user'],
-    titles=
-        ['$\log_{10}$(Inner-CBSA Connections per Capita) per CBSA', '$\log_{10}$(Outgoing CBSA Connections per Capita) per CBSA', 
-         '$\log_{10}$(Total CBSA Connections per Capita) per CBSA', '$\log_{10}$(Inner-CBSA Connections per User) per CBSA', 
-         '$\log_{10}$(Outgoing CBSA Connections per User) per CBSA', '$\log_{10}$(Total CBSA Connections per User) per CBSA',],
-    x_labels=['Inner-CBSA Connections per Capita', 'Outgoing CBSA Connections per Capita', 'Total CBSA Connections per Capita', 
+    titles=[
+        '$\log_{10}$(Inner-CBSA Connections per Capita) per CBSA',
+        '$\log_{10}$(Outgoing CBSA Connections per Capita) per CBSA',
+        '$\log_{10}$(Total CBSA Connections per Capita) per CBSA',
+        '$\log_{10}$(Inner-CBSA Connections per User) per CBSA',
+        '$\log_{10}$(Outgoing CBSA Connections per User) per CBSA',
+        '$\log_{10}$(Total CBSA Connections per User) per CBSA',
+    ],
+    x_labels=['Inner-CBSA Connections per Capita', 'Outgoing CBSA Connections per Capita', 'Total CBSA Connections per Capita',
               'Inner-CBSA Connections per User', 'Outgoing CBSA Connections per User', 'Total CBSA Connections per User'],
     log_x=True,
     figsize_per_plot=5,
@@ -467,16 +586,20 @@ fig, axes = plot_histograms_with_pdfs_kde(
 plt.show()
 fig.savefig("F:\\dsl_CLIMA\\submittable\\plots\\histograms\\per_capita & per_user\\cbsa_connections_histograms.png", dpi=800, bbox_inches='tight')
 
-# --- MSA-level Connection, User, Population, & Coverage Estimate histograms ---
+# MSA-only per-capita and per-user histograms.
 fig, axes = plot_histograms_with_pdfs_kde(
-    dfs=[df_cbsa]*6,
+    dfs=[df_cbsa] * 6,
     cols=['inter_cbsa_connections per capita', 'outer_cbsa_connections per capita', 'total connections per capita',
           'inter_cbsa_connections per user', 'outer_cbsa_connections per user', 'total connections per user'],
-    titles=
-        ['$\log_{10}$(Inner-MSA Connections per Capita) per MSA', '$\log_{10}$(Outgoing MSA Connections per Capita) per MSA', 
-         '$\log_{10}$(Total MSA Connections per Capita) per MSA', '$\log_{10}$(Inner-MSA Connections per User) per MSA', 
-         '$\log_{10}$(Outgoing MSA Connections per User) per MSA', '$\log_{10}$(Total MSA Connections per User) per MSA',],
-     x_labels=['Inner-MSA Connections per Capita', 'Outgoing MSA Connections per Capita', 'Total MSA Connections per Capita', 
+    titles=[
+        '$\log_{10}$(Inner-MSA Connections per Capita) per MSA',
+        '$\log_{10}$(Outgoing MSA Connections per Capita) per MSA',
+        '$\log_{10}$(Total MSA Connections per Capita) per MSA',
+        '$\log_{10}$(Inner-MSA Connections per User) per MSA',
+        '$\log_{10}$(Outgoing MSA Connections per User) per MSA',
+        '$\log_{10}$(Total MSA Connections per User) per MSA',
+    ],
+    x_labels=['Inner-MSA Connections per Capita', 'Outgoing MSA Connections per Capita', 'Total MSA Connections per Capita',
               'Inner-MSA Connections per User', 'Outgoing MSA Connections per User', 'Total MSA Connections per User'],
     log_x=True,
     figsize_per_plot=5,
@@ -488,16 +611,20 @@ fig, axes = plot_histograms_with_pdfs_kde(
 plt.show()
 fig.savefig("F:\\dsl_CLIMA\\submittable\\plots\\histograms\\per_capita & per_user\\msa_connections_histograms.png", dpi=800, bbox_inches='tight')
 
-# --- muSA-level Connection, User, Population, & Coverage Estimate histograms ---
+# muSA-only per-capita and per-user histograms.
 fig, axes = plot_histograms_with_pdfs_kde(
-    dfs=[df_cbsa]*6,
+    dfs=[df_cbsa] * 6,
     cols=['inter_cbsa_connections per capita', 'outer_cbsa_connections per capita', 'total connections per capita',
           'inter_cbsa_connections per user', 'outer_cbsa_connections per user', 'total connections per user'],
-    titles=
-        ['$\log_{10}$(Inner-muSA Connections per Capita) per muSA', '$\log_{10}$(Outgoing muSA Connections per Capita) per muSA', 
-         '$\log_{10}$(Total muSA Connections per Capita) per muSA', '$\log_{10}$(Inner-muSA Connections per User) per muSA', 
-         '$\log_{10}$(Outgoing muSA Connections per User) per muSA', '$\log_{10}$(Total muSA Connections per User) per muSA',],
-    x_labels=['Inner-muSA Connections per Capita', 'Outgoing muSA Connections per Capita', 'Total muSA Connections per Capita', 
+    titles=[
+        '$\log_{10}$(Inner-muSA Connections per Capita) per muSA',
+        '$\log_{10}$(Outgoing muSA Connections per Capita) per muSA',
+        '$\log_{10}$(Total muSA Connections per Capita) per muSA',
+        '$\log_{10}$(Inner-muSA Connections per User) per muSA',
+        '$\log_{10}$(Outgoing muSA Connections per User) per muSA',
+        '$\log_{10}$(Total muSA Connections per User) per muSA',
+    ],
+    x_labels=['Inner-muSA Connections per Capita', 'Outgoing muSA Connections per Capita', 'Total muSA Connections per Capita',
               'Inner-muSA Connections per User', 'Outgoing muSA Connections per User', 'Total muSA Connections per User'],
     log_x=True,
     figsize_per_plot=5,
