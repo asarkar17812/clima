@@ -7803,7 +7803,8 @@ a.anchor-link {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h1 id="Scaling-of-Social-Connections-&amp;-Demographic-Analysis">Scaling of Social Connections &amp; Demographic Analysis<a class="anchor-link" href="#Scaling-of-Social-Connections-&amp;-Demographic-Analysis">¶</a></h1><hr/>
-<h4 id="Ayush-Sarkar:-5/15/2025---7/11/2025-%7C-CLIMA-w/-Dynamical-Systems-Lab-@-NYU">Ayush Sarkar: 5/15/2025 - 7/11/2025 | CLIMA w/ Dynamical Systems Lab @ NYU<a class="anchor-link" href="#Ayush-Sarkar:-5/15/2025---7/11/2025-%7C-CLIMA-w/-Dynamical-Systems-Lab-@-NYU">¶</a></h4><hr/>
+<h4 id="Ayush-Sarkar:-5/15/2025---7/11/2025-%7C-CLIMA-w/-Dynamical-Systems-Lab-@-NYU">Ayush Sarkar: 5/15/2025 - 7/11/2025 | CLIMA w/ Dynamical Systems Lab @ NYU<a class="anchor-link" href="#Ayush-Sarkar:-5/15/2025---7/11/2025-%7C-CLIMA-w/-Dynamical-Systems-Lab-@-NYU">¶</a></h4><p><em>A study of how Facebook-derived social connectivity scales with population across U.S. counties and Core-Based Statistical Areas (CBSAs), paired with Census-block demographics of coastal NYC communities.</em></p>
+<hr/>
 </div>
 </div>
 </div>
@@ -7815,16 +7816,15 @@ a.anchor-link {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h1 id="Objectives:">Objectives:<a class="anchor-link" href="#Objectives:">¶</a></h1><ul>
-<li><p>CiviL Infrastructure research for climate change Mitigation and Adaptation (CLIMA) is a research effort focused on infrastructure research to help develop equitable and feasible solutions to the increasingly urgent threats posted by climate change through mitigating damages and adapting to hazards and changes across coastal communities.</p>
+<li><p><strong>CiviL Infrastructure research for climate change Mitigation and Adaptation (CLIMA)</strong> is a research effort focused on infrastructure research to help develop equitable and feasible solutions to the increasingly urgent threats <em>posed</em> by climate change through mitigating damages and adapting to hazards and changes across coastal communities.</p>
 </li>
-<li><p>This leg of CLIMA is an interdisciplinary research project aims to model the effects of flood risk on coastal communities through a detailed
-investigation of the social networks, as well as other factors, in an attempt to create models that are more capable of capturing human mobility phenomena, especially amongst homeowners.</p>
+<li><p>This leg of CLIMA is an interdisciplinary research project that aims to model the effects of flood risk on coastal communities through a detailed investigation of social networks, alongside other factors, in an attempt to create models that are more capable of capturing human mobility phenomena, especially amongst homeowners.</p>
 </li>
-<li><p>By using a modified compartmental model, we can split the population into unique sets and utilize the mean-field hypothesis to treat individuals as identical, thus allowing us focus on the population's dynamics instead of individual-level cognition. To better appreciate the unique perspectives of individuals and communities that face these threats, CLIMA also seeks to include qualitative information about the network extracted through interviews with homeowners of coastal communities here, in NYC.</p>
+<li><p>By using a modified compartmental model, we can split the population into unique sets and utilize the mean-field hypothesis to treat individuals as identical, allowing us to focus on the population's dynamics instead of individual-level cognition. To better appreciate the unique perspectives of individuals and communities that face these threats, CLIMA also seeks to include qualitative information about the network extracted through interviews with homeowners of coastal communities here in NYC.</p>
 </li>
-<li><p>Additionally, demographic breakdowns of the locations of study were done to further understand the context and the actual lives of the homeowners within these communities. On the quantitative side, we utilize more traditional methods, including the utilization of historical Census data and related public data to build a more comprehensive profile of demographics.</p>
+<li><p>Additionally, demographic breakdowns of the locations of study were done to further understand the context and everyday lives of the homeowners within these communities. On the quantitative side, we utilize more traditional methods, including historical Census data and related public data, to build a more comprehensive demographic profile.</p>
 </li>
-<li><p>This <strong>notebook specifically focuses on the scaling of social connections with population</strong> in counties and CBSAs, and <strong>demographic analyses</strong>.</p>
+<li><p>This <strong>notebook specifically focuses on (1) the scaling of social connections with population</strong> across counties and CBSAs, and <strong>(2) demographic analyses</strong> of the coastal NYC communities under study (with Hamilton Beach as the running example, and Red Hook as a comparison).</p>
 </li>
 </ul>
 <hr/>
@@ -7841,17 +7841,18 @@ investigation of the social networks, as well as other factors, in an attempt to
 <h1 id="List-of-Tasks:">List of Tasks:<a class="anchor-link" href="#List-of-Tasks:">¶</a></h1><ol>
 <li>Completed CITI training</li>
 <li>Completed interview transcriptions</li>
-<li>Computed scaling exponents for social connections vs population at different administrative divisions in the US, including:<ul>
+<li>Computed scaling exponents for social connections vs. population at different administrative divisions in the US, including:<ul>
 <li>County-level</li>
+<li>CBSA-level (combined Metropolitan + Micropolitan)</li>
 <li>MSA-level (Metropolitan Statistical Area)</li>
 <li>muSA-level (Micropolitan Statistical Area)</li>
 </ul>
 </li>
-<li>Attempted to perform community identification using Clique Percolations:<ul>
-<li>Unsuccessful due to hardware and time constraints</li>
+<li>Attempted to perform community identification using Clique Percolation:<ul>
+<li>Unsuccessful due to hardware and time constraints on a ~10M-row symmetric edge list</li>
 </ul>
 </li>
-<li>Generating demographic analyses for relevant communities</li>
+<li>Generated demographic analyses for the relevant coastal NYC communities (Hamilton Beach, Howard Beach, Red Hook)</li>
 </ol>
 <hr/>
 </div>
@@ -7865,30 +7866,36 @@ investigation of the social networks, as well as other factors, in an attempt to
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h1 id="Table-of-Contents:">Table of Contents:<a class="anchor-link" href="#Table-of-Contents:">¶</a></h1><ol>
-<li>Introduction:<ul>
-<li>Datasets</li>
-<li>Preliminary Notation and Definitions</li>
-<li>Network Types</li>
-<li>SCI and Connection Equations</li>
-<li>Urban Scaling</li>
-<li>Improving $\beta$ via Rescaling</li>
+<li><strong>Introduction:</strong><ul>
+<li>Datasets and their provenance</li>
+<li>Preliminary notation and definitions</li>
+<li>Network types (county- and CBSA-level)</li>
+<li>SCI and connection equations</li>
+<li>Urban scaling background</li>
+<li>Improving $\beta$ via rescaling (per <em>Schläpfer et al.</em>)</li>
 </ul>
 </li>
-<li>Data Cleaning &amp; Exploration:<ul>
-<li>Includes choropleth maps for geographic visualization</li>
-<li>Includes histograms and PDFs</li>
-<li>Includes relevant statistical tests for validation</li>
+<li><strong>Data Cleaning &amp; Exploration:</strong><ul>
+<li>Loading and cleaning the SCI, ESRI, crosswalk, and Census files</li>
+<li>Choropleth maps for geographic visualization</li>
+<li>Histograms with KDE and parametric PDF fits</li>
 </ul>
 </li>
-<li>Plots of log-log linear regressions</li>
-<li>Plots of demographic analyses at the Census Block resolution in Hamilton Beach:<ul>
-<li>Age/Sex Population Pyramids w/ NYC Averages</li>
-<li>Race/Ethnicity Distribution w/ NYC Averages</li>
-<li>Persons per Household (1-5+) Distribution w/ NYC Averages</li>
-<li>Housing Occupation Status Distribution w/ NYC Averages</li>
-<li>Housing Tenure Distribution w/ NYC Averages</li>
+<li><strong>Scaling Results:</strong><ul>
+<li>Log-log linear regression plots at the County, CBSA, MSA, and muSA levels</li>
+<li>Tabulated $\beta$ and $\gamma$ estimates with confidence intervals</li>
 </ul>
 </li>
+<li><strong>Demographic Analyses (Census Block resolution, NYC):</strong><ul>
+<li>Age/Sex population pyramids w/ NYC averages</li>
+<li>Race/Ethnicity distribution w/ NYC averages</li>
+<li>Persons per household (1-5+) distribution w/ NYC averages</li>
+<li>Housing occupancy status distribution w/ NYC averages</li>
+<li>Housing tenure (owner vs. renter) distribution w/ NYC averages</li>
+<li>Pie charts of educational attainment and household income for Hamilton Beach and Red Hook</li>
+</ul>
+</li>
+<li><strong>Discussion, future work, and references</strong></li>
 </ol>
 <hr/>
 </div>
@@ -7902,56 +7909,57 @@ investigation of the social networks, as well as other factors, in an attempt to
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h1 id="Quantitative-Datasets:">Quantitative Datasets:<a class="anchor-link" href="#Quantitative-Datasets:">¶</a></h1><h2 id="Datasets">Datasets<a class="anchor-link" href="#Datasets">¶</a></h2><ol>
-<li>The U.S. Bureau of Labor Statistics County-to-CBSA Crosswalk, used to map Counties to Core-Based Statistical Areas (CBSAs).</li>
-<li>ESRI 2022 Monthly Active Facebook Users and Population Estimates by County.</li>
-<li>Meta’s Social Connectedness Index (SCI).</li>
-<li>Meta Public Coverage Estimates.</li>
-<li>IPUMS NHGIS: Census Demographics Files at Census Block Resolutions<ul>
-<li>2020 Decennial Census Demographic and Housing Characteristics (DHC)<ul>
-<li>H3: Housing Occupancy Counts</li>
-<li>H4: Housing Tenure Counts</li>
-<li>H9: Household Size Counts</li>
-<li>P3: Race/Ethnicity Counts</li>
-<li>P5: Hispanic or Latino Origin by Race</li>
-<li>P12: Sex by Age for Selected Groups across the Total Population</li>
-<li>nhgis0004_ds267_20235: Educational Level and Household Income</li>
+<li><strong>U.S. Bureau of Labor Statistics County-to-CBSA Crosswalk</strong> — used to map counties to Core-Based Statistical Areas (CBSAs), and from there to MSAs vs. muSAs.</li>
+<li><strong>ESRI 2022 Monthly Active Facebook Users and Population Estimates by County</strong> — provides the user counts $|S_i|$ and population estimates $N_i$ that enter both the connection formulas and the coverage estimate $s_i$.</li>
+<li><strong>Meta's Social Connectedness Index (SCI)</strong> — the directional, county-to-county friendship-tie measure that anchors the entire connection calculation.</li>
+<li><strong>Meta Public Coverage Estimates</strong> — used as an external sanity check on our derived $s_i$ values.</li>
+<li><strong>IPUMS NHGIS: Census Demographics Files at Census Block resolution</strong> — for the demographic side of the project:<ul>
+<li>2020 Decennial Census Demographic and Housing Characteristics (DHC):<ul>
+<li><code>H3</code>: Housing Occupancy Counts</li>
+<li><code>H4</code>: Housing Tenure Counts</li>
+<li><code>H9</code>: Household Size Counts</li>
+<li><code>P3</code>: Race counts</li>
+<li><code>P5</code>: Hispanic or Latino origin by race</li>
+<li><code>P12</code>: Sex by age across the total population</li>
 </ul>
 </li>
+<li><code>nhgis0004_ds267_20235</code>: Educational attainment and household income</li>
 </ul>
 </li>
-<li>2021 County-level Census Shape Files for choropleths</li>
+<li><strong>2021 County- and CBSA-level TIGER/Line shapefiles</strong> for choropleths.</li>
 </ol>
 <h2 id="Meta-SCI">Meta SCI<a class="anchor-link" href="#Meta-SCI">¶</a></h2><p>The <a href="https://data.humdata.org/dataset/e9988552-74e4-4ff4-943f-c782ac8bca87/resource/c59fd5ac-0458-4e83-b6be-5334f0ea9a69/download/us-counties-us-counties-fb-social-connectedness-index-october-2021.zip">County-to-County data sheet</a> includes the following columns:</p>
 <ol>
-<li><code>user_loc</code> := GEOID_ID of the source location ($i$)</li>
-<li><code>fr_loc</code> := GEOID_ID of the target location ($j$)</li>
-<li><code>scaled_sci</code> := Scaled Social Connectedness Index ($\text{SCI}_{i,j}$)</li>
+<li><code>user_loc</code> — GEOID of the source location ($i$)</li>
+<li><code>fr_loc</code> — GEOID of the target location ($j$)</li>
+<li><code>scaled_sci</code> — Scaled Social Connectedness Index ($\text{SCI}_{i,j}$)</li>
 <li>Original dataframe dimensions: $[10{,}413{,}529 \times 3]$<ul>
-<li>After cleaning, we have 3141 unique FIPS codes, 917 CBSA codes, 536 MSA codes, and 381 muSA codes.<ul>
-<li>$2 \cdot \tbinom{3,141}{2} + 3,141 = 9,865,881 \text{ Cleaned SCI Row Entries}$</li>
+<li>After cleaning, we have 3,141 unique FIPS codes, 917 CBSA codes, 381 MSA codes, and 536 muSA codes.<ul>
+<li>Expected directed row count: $2 \cdot \binom{3{,}141}{2} + 3{,}141 = 9{,}865{,}881$ cleaned SCI row entries.</li>
 </ul>
 </li>
 </ul>
 </li>
 <li><strong>Notes:</strong><ul>
-<li>The dataset includes both $(i,j)$ and $(j,i)$ entries.</li>
-<li>SCI is multiplied by $10^9$, and Gaussian noise in the range $\pm[0,1]$ is added to the number of connections between any GEOID pair, ensuring the minimum number of connections    between any two locations is non-zero. Additionally, any counties with less than 50,000 active users are not included in the SCI file.<ul>
+<li>The dataset includes both $(i,j)$ and $(j,i)$ entries (i.e., it is symmetric / fully directed).</li>
+<li>SCI is reported multiplied by $10^9$, and Gaussian noise in the range $\pm[0,1]$ is added to the connection count between any GEOID pair, ensuring the minimum number of connections between two locations is non-zero. Counties with fewer than 50,000 active users are not included in the SCI file.<ul>
 <li><a href="https://dataforgood.facebook.com/dfg/docs/methodology-social-connectedness-index">Source: SCI Methodology</a></li>
 </ul>
 </li>
-<li>The SCI measured currently is generally stable over different time periods and has been shown to predict trade flows in the 1980s as well as it does as of 2021. Similar research has been done to show that the current SCI is as good a predictor for mutual fund investments in 2000s as it is as of 2021.<ul>
-<li><a href="(https://data.humdata.org/dataset/e9988552-74e4-4ff4-943f-c782ac8bca87/resource/a0c37eb4-b45c-436d-b2b2-c0c9b1974318/download/documentation-fb-social-connectedness-index-october-2021.pdf">Source: SCI Docs</a>)</li>
+<li>The SCI is generally stable over time — it has been shown to predict trade flows in the 1980s about as well as it does today, and the same has been shown for mutual-fund investments in the 2000s vs. as of 2021. This stability is partly why we are comfortable pairing 2021 SCI with 2022 ESRI user / population estimates.<ul>
+<li><a href="https://data.humdata.org/dataset/e9988552-74e4-4ff4-943f-c782ac8bca87/resource/a0c37eb4-b45c-436d-b2b2-c0c9b1974318/download/documentation-fb-social-connectedness-index-october-2021.pdf">Source: SCI Docs</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ol>
-<h2 id="ESRI-2022-Facebook-Monthly-Active-Users(MAU)-and-Population-Estimates">ESRI 2022 Facebook Monthly Active Users(MAU) and Population Estimates<a class="anchor-link" href="#ESRI-2022-Facebook-Monthly-Active-Users(MAU)-and-Population-Estimates">¶</a></h2><p>The <a href="https://nyuds.maps.arcgis.com/home/item.html?id=14a2fb32e22b4fe5ab9d884c9e994075">ESRI dataset</a> is a multipurpose collection of market potential indices for various commercial services and goods, including Facebook MAU estimates. It also includes multiple GEOID resolutions (e.g., counties, blocks, ZCTAs). The columns of interest are:</p>
+<h2 id="ESRI-2022-Facebook-Monthly-Active-Users-(MAU)-and-Population-Estimates">ESRI 2022 Facebook Monthly Active Users (MAU) and Population Estimates<a class="anchor-link" href="#ESRI-2022-Facebook-Monthly-Active-Users-(MAU)-and-Population-Estimates">¶</a></h2><p>The <a href="https://nyuds.maps.arcgis.com/home/item.html?id=14a2fb32e22b4fe5ab9d884c9e994075">ESRI dataset</a> is a multipurpose collection of market potential indices for various commercial services and goods, including Facebook MAU estimates. It also includes multiple GEOID resolutions (e.g., counties, blocks, ZCTAs). The columns of interest are:</p>
 <ol>
-<li><code>MP19049a_B</code>: 2022 Social Media — Used Facebook in the Last 30 Days</li>
-<li><code>TOTPOP_CY</code>: 2022 Total Population (ESRI, non-Census)</li>
-<li><code>ID</code>: 2022 5-digit FIPS county codes</li>
+<li><code>MP19049a_B</code> — 2022 Social Media: used Facebook in the last 30 days (our $|S_i|$)</li>
+<li><code>TOTPOP_CY</code> — 2022 total population (ESRI, non-Census) (our $N_i$)</li>
+<li><code>ID</code> — 2022 5-digit FIPS county code</li>
 </ol>
+<p>We choose ESRI specifically because Meta does <strong>not</strong> publish official county-level MAU counts; the ESRI estimates are the best publicly available stand-in, which is what makes the coverage-rescaling step in <em>Schläpfer et al.</em> necessary in our setting.</p>
 </div>
 </div>
 </div>
@@ -7969,7 +7977,12 @@ investigation of the social networks, as well as other factors, in an attempt to
 <img alt="Meta Monthly Active Users" src="image/public cov_ests/Screenshot 2026-01-22 at 00.50.55.png" width="1250"/>
 </p>
 <ul>
-<li>According to Meta's 2022 quartlerly performance disclosures for shareholders, we can find an official estimate for the coverage estimate across North America (America + Canada). Since our ESRI data is from 2022, we can recognize the entries associated with Q1-Q4 2022, where there is 199 million daily active users and 266 million monthly active users as of Q4 2022. According to 2022 population estimates, the United States's population was about 333.3 million and Canada's 38.94 million, leading to a sum total of 372.24 million. This leads to a MAU coverage estimate for North America of $266/372.24 \approx 0.715$ and DAU coverage estimate of $199/372.24 \approx = 0.535$.</li>
+<li>According to Meta's 2022 quarterly performance disclosures for shareholders, we can find an official estimate for the coverage rate across North America (United States + Canada). Since our ESRI data is from 2022, we focus on the entries associated with Q1-Q4 2022, where there are <strong>199 million daily active users (DAU)</strong> and <strong>266 million monthly active users (MAU)</strong> as of Q4 2022. Using 2022 population estimates — United States $\approx$ 333.3 M, Canada $\approx$ 38.94 M, summing to 372.24 M — we obtain:<ul>
+<li>MAU coverage estimate for North America: $266/372.24 \approx 0.715$</li>
+<li>DAU coverage estimate for North America: $199/372.24 \approx 0.535$</li>
+</ul>
+</li>
+<li>These figures bracket what we should <em>expect</em> for our county-level coverage estimates $s_i$. As we'll see in the choropleth section, our ESRI-derived $s_i$ values average around 0.55 — close to the Meta DAU figure but below the MAU figure by ~17%, which we revisit in the <strong>Potential Problems</strong> section.</li>
 </ul>
 <hr/>
 </div>
@@ -7982,30 +7995,34 @@ investigation of the social networks, as well as other factors, in an attempt to
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Preliminary-Notation-and-Definitions:">Preliminary Notation and Definitions:<a class="anchor-link" href="#Preliminary-Notation-and-Definitions:">¶</a></h1><h2 id="$$%0A---%5Cbegin%7Balign*%7D-%0A--------&amp;%7B%5Clarge-%5Ctextbf%7BSocial-Network-Graph-Notation%7D%7D%5C%5C%0A--------&amp;C-=-%5Ctext%7BGEOID-level-Covering%7D-%5C%5C%0A--------&amp;%5Ctilde%7BC%7D-=-%5Ctext%7BGEOID-level-Compliment-Covering%7D%5C%5C%0A--------&amp;G-=-%5Ctext%7BWhole-Social-Network-Graph%7D-%5C%5C%0A--------&amp;n_%7B%5Ctext%7BGEOID%7D%7D-=-%5Ctext%7BNumber-of-total-GEOID-level-nodes%7D-%5Cin-G-%5C%5C%5C%5C%0A--------&amp;%7B%5Clarge-%5Ctextbf%7BDegree-and-Connection-Notation%7D%7D%5C%5C%0A--------&amp;k_%7Bo%7D-=-%5Ctext%7BCumulative-Outgoing-Degree%7D-%5C%5C%0A--------&amp;k_%7Bic%7D-=-%5Ctext%7BCumulative-Inter-GEOID-Degree%7D-%5C%5C%0A--------&amp;k_%7Bt%7D-=-%5Ctext%7BCumulative-Total-Degree%7D-%5C%5C%0A--------&amp;K_%7Br%7D-=-%5Ctext%7BRescaled-Cumulative-Degree%7D-%5C%5C%0A--------&amp;%5Clangle-K_%7Br%7D%5Crangle-=-%5Ctext%7BAverage-Rescaled-Cumulative-Degree%7D%5C%5C%0A--------&amp;%5Clangle-k%5Crangle-=-%5Ctext%7BAverage-Nodal-Degree%7D-%5C%5C%5C%5C%0A--------&amp;%7B%5Clarge-%5Ctextbf%7BUser-and-Population-Notation%7D%7D%5C%5C%0A--------&amp;N-=-%5Ctext%7BGEOID-Population-Estimate%7D-%5C%5C%0A--------&amp;%5Clangle-N%5Crangle-=-%5Ctext%7BAverage-GEOID-Population-Estimate%7D-%5C%5C%0A--------&amp;%7CS%7C-=-%5Ctext%7BGEOID-2022-Facebook-User-Estimate-(30-days)%7D-%5C%5C%0A--------&amp;s-=-%5Ctext%7BCoverage-Estimate%7D%5C%5C%5C%5C%0A--------&amp;%7B%5Clarge-%5Ctextbf%7BScaling-Notation%7D%7D%5C%5C%0A--------&amp;%5Cbeta-=-%5Ctext%7BScaling-Exponent-Value%7D-%5C%5C%0A--------&amp;%5Cgamma-=-%5Ctext%7BIntercept-Value%7D-%0A----%5Cend%7Balign*%7D%0A$$">$$
-   \begin{align*} 
+<h1 id="Preliminary-Notation-and-Definitions:">Preliminary Notation and Definitions:<a class="anchor-link" href="#Preliminary-Notation-and-Definitions:">¶</a></h1><p>A brief glossary so that the formulas below are easy to read. Throughout, "GEOID" refers generically to a geographic unit — usually a county (5-digit FIPS) or a CBSA (5-digit CBSA code). The subscript $i$ indexes an individual GEOID; the subscript on $k$ tags the <em>type</em> of degree being summed.</p>
+<p>$$
+   \begin{align*}
         &amp;{\large \textbf{Social Network Graph Notation}}\\
-        &amp;C = \text{GEOID-level Covering} \\
-        &amp;\tilde{C} = \text{GEOID-level Compliment Covering}\\
-        &amp;G = \text{Whole Social Network Graph} \\
-        &amp;n_{\text{GEOID}} = \text{Number of total GEOID-level nodes} \in G \\\\
+        &amp;G = \text{Whole social network graph (all counties, all edges)} \\
+        &amp;C = \text{GEOID-level covering (e.g., the set of counties forming a single CBSA)} \\
+        &amp;\tilde{C} = \text{Complement covering (all counties outside } C \text{)} \\
+        &amp;n_{\text{GEOID}} = \text{Number of GEOID-level nodes} \in G \\\\
         &amp;{\large \textbf{Degree and Connection Notation}}\\
-        &amp;k_{o} = \text{Cumulative Outgoing Degree} \\
-        &amp;k_{ic} = \text{Cumulative Inter-GEOID Degree} \\
-        &amp;k_{t} = \text{Cumulative Total Degree} \\
-        &amp;K_{r} = \text{Rescaled Cumulative Degree} \\
-        &amp;\langle K_{r}\rangle = \text{Average Rescaled Cumulative Degree}\\
-        &amp;\langle k\rangle = \text{Average Nodal Degree} \\\\
+        &amp;k_{i,\,o} = \text{Outgoing degree of GEOID } i \text{ (cross-GEOID connections)} \\
+        &amp;k_{i,\,ic} = \text{Inter-GEOID degree of GEOID } i \text{ (within-GEOID connections)} \\
+        &amp;k_{i,\,t} = \text{Total degree of GEOID } i = k_{i,\,o} + k_{i,\,ic} \\
+        &amp;K_{r,\,i} = \text{Rescaled cumulative degree of } i \text{ (i.e., } k_{i,\,t}/s_i \text{)} \\
+        &amp;\langle K_{r}\rangle = \text{Average rescaled cumulative degree over all GEOIDs} \\\\
         &amp;{\large \textbf{User and Population Notation}}\\
-        &amp;N = \text{GEOID Population Estimate} \\
-        &amp;\langle N\rangle = \text{Average GEOID Population Estimate} \\
-        &amp;|S| = \text{GEOID 2022 Facebook User Estimate (30 days)} \\
-        &amp;s = \text{Coverage Estimate}\\\\
+        &amp;N_i = \text{Population estimate of GEOID } i \text{ (ESRI 2022)} \\
+        &amp;\langle N\rangle = \text{Average GEOID population estimate} \\
+        &amp;|S_i| = \text{2022 Facebook MAU estimate (30-day) for GEOID } i \\
+        &amp;s_i = |S_i| / N_i = \text{Coverage estimate for GEOID } i \\\\
         &amp;{\large \textbf{Scaling Notation}}\\
-        &amp;\beta = \text{Scaling Exponent Value} \\
-        &amp;\gamma = \text{Intercept Value} 
+        &amp;\beta = \text{Scaling exponent (slope in log-log space)} \\
+        &amp;\gamma = \text{Intercept (in log-log space)}
     \end{align*}
-$$<a class="anchor-link" href="#$$%0A---%5Cbegin%7Balign*%7D-%0A--------&amp;%7B%5Clarge-%5Ctextbf%7BSocial-Network-Graph-Notation%7D%7D%5C%5C%0A--------&amp;C-=-%5Ctext%7BGEOID-level-Covering%7D-%5C%5C%0A--------&amp;%5Ctilde%7BC%7D-=-%5Ctext%7BGEOID-level-Compliment-Covering%7D%5C%5C%0A--------&amp;G-=-%5Ctext%7BWhole-Social-Network-Graph%7D-%5C%5C%0A--------&amp;n_%7B%5Ctext%7BGEOID%7D%7D-=-%5Ctext%7BNumber-of-total-GEOID-level-nodes%7D-%5Cin-G-%5C%5C%5C%5C%0A--------&amp;%7B%5Clarge-%5Ctextbf%7BDegree-and-Connection-Notation%7D%7D%5C%5C%0A--------&amp;k_%7Bo%7D-=-%5Ctext%7BCumulative-Outgoing-Degree%7D-%5C%5C%0A--------&amp;k_%7Bic%7D-=-%5Ctext%7BCumulative-Inter-GEOID-Degree%7D-%5C%5C%0A--------&amp;k_%7Bt%7D-=-%5Ctext%7BCumulative-Total-Degree%7D-%5C%5C%0A--------&amp;K_%7Br%7D-=-%5Ctext%7BRescaled-Cumulative-Degree%7D-%5C%5C%0A--------&amp;%5Clangle-K_%7Br%7D%5Crangle-=-%5Ctext%7BAverage-Rescaled-Cumulative-Degree%7D%5C%5C%0A--------&amp;%5Clangle-k%5Crangle-=-%5Ctext%7BAverage-Nodal-Degree%7D-%5C%5C%5C%5C%0A--------&amp;%7B%5Clarge-%5Ctextbf%7BUser-and-Population-Notation%7D%7D%5C%5C%0A--------&amp;N-=-%5Ctext%7BGEOID-Population-Estimate%7D-%5C%5C%0A--------&amp;%5Clangle-N%5Crangle-=-%5Ctext%7BAverage-GEOID-Population-Estimate%7D-%5C%5C%0A--------&amp;%7CS%7C-=-%5Ctext%7BGEOID-2022-Facebook-User-Estimate-(30-days)%7D-%5C%5C%0A--------&amp;s-=-%5Ctext%7BCoverage-Estimate%7D%5C%5C%5C%5C%0A--------&amp;%7B%5Clarge-%5Ctextbf%7BScaling-Notation%7D%7D%5C%5C%0A--------&amp;%5Cbeta-=-%5Ctext%7BScaling-Exponent-Value%7D-%5C%5C%0A--------&amp;%5Cgamma-=-%5Ctext%7BIntercept-Value%7D-%0A----%5Cend%7Balign*%7D%0A$$">¶</a></h2>
+$$</p>
+<blockquote>
+<p><strong>A note on terminology:</strong> in this notebook, "<strong>Inter-</strong>" is used to denote <em>within-GEOID</em> connections (i.e., $(i,i)$ pairs), while "<strong>Outer-</strong>" / "<strong>Outgoing</strong>" denote <em>cross-GEOID</em> connections (i.e., $(i,j)$ with $i \neq j$). This is non-standard — the prefix "inter-" conventionally means <em>between</em> — but it is internally consistent across the codebase, dataframe column names, and figures. If you are reading the variable <code>inter_county_connections</code>, that is the within-county degree.</p>
+</blockquote>
+<hr/>
 </div>
 </div>
 </div>
@@ -8017,71 +8034,71 @@ $$<a class="anchor-link" href="#$$%0A---%5Cbegin%7Balign*%7D-%0A--------&amp;%7B
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h1 id="Network-Types:">Network Types:<a class="anchor-link" href="#Network-Types:">¶</a></h1><hr/>
-<h2 id="County-level-Network-Types">County-level Network Types<a class="anchor-link" href="#County-level-Network-Types">¶</a></h2><p>At the <strong>county level</strong>, we have <strong>Total</strong>, <strong>Inter</strong>, and <strong>Outgoing</strong> network types, which for the county-level graph $G_{\text{County}}$, is modeled as follows:</p>
+<h2 id="County-level-network-types">County-level network types<a class="anchor-link" href="#County-level-network-types">¶</a></h2><p>At the <strong>county level</strong>, we partition connections into three disjoint types — <strong>Inter</strong>, <strong>Outgoing</strong>, and <strong>Total</strong> (= Inter + Outgoing). For the county-level graph $G_{\text{County}}$ and a fixed home county $i$:</p>
 <ul>
-<li><p><strong>Inter-county (within county) connections</strong></p>
+<li><p><strong>Inter-county (within-county) connections</strong></p>
 <p>$$
-\{(i,i) \mid i \in G\} \tag{Inter-County Conn.}
+E_{ic}(i) = \{(u, v) \mid u, v \in i,\ u \neq v\} \tag{Inter-County Conn.}
 $$</p>
 <ul>
-<li>Connections between users in a single county $i$.</li>
+<li>Connections between two users $u, v$ who both reside in county $i$. These are loops on the county node when the graph is contracted to county granularity.</li>
 </ul>
 </li>
 <li><p><strong>Outgoing (cross-county) connections</strong></p>
 <p>$$
-\{(i,j) \mid j \in G \text{ and } j \neq i\} \tag{Outer-County Conn.}
+E_o(i) = \{(u, v) \mid u \in i,\ v \in j,\ j \neq i\} \tag{Outer-County Conn.}
 $$</p>
 <ul>
-<li>Connections between users in different counties, where $i$ is fixed to the county $C_{i}$ and $j \in G$ is any other county.</li>
+<li>Connections between a user $u$ in county $i$ and a user $v$ in some other county $j$.</li>
 </ul>
 </li>
 <li><p><strong>Total county connections</strong></p>
 <p>$$
-\{(i,j) \mid j \in G\} \tag{Total County Conn.}
+E_t(i) = E_{ic}(i) \;\cup\; E_o(i) \tag{Total County Conn.}
 $$</p>
 <ul>
-<li>All connections between users in any county pair given one fixed county $i \in G$ and any other county $j\in G$.</li>
+<li>Every connection touching county $i$.</li>
 </ul>
 </li>
 </ul>
+<p>The cumulative degree $k_{i,\,t}$ is simply $|E_t(i)|$, and likewise for $k_{i,\,ic}$ and $k_{i,\,o}$.</p>
 <hr/>
-<h2 id="CBSA-level-Network-Types">CBSA-level Network Types<a class="anchor-link" href="#CBSA-level-Network-Types">¶</a></h2><p>At the <strong>CBSA level</strong>, we have <strong>Total</strong>, <strong>Inter-Covering-Inter-County</strong>, <strong>Inter-Covering-Cross-County</strong>, and
-<strong>Outer-Cover-Outgoing-County</strong> network types,
-which for a CBSA-level graph $G_{\text{CBSA}}$, is modeled as follows:</p>
+<h2 id="CBSA-level-network-types">CBSA-level network types<a class="anchor-link" href="#CBSA-level-network-types">¶</a></h2><p>At the <strong>CBSA level</strong>, the picture is one nesting deeper, because each CBSA is itself a covering $C$ over multiple counties. We define four CBSA-level types: <strong>ICIC</strong>, <strong>ICCC</strong>, <strong>OCOC</strong>, and <strong>Total</strong> (= ICIC + ICCC + OCOC).</p>
 <ul>
-<li><p><strong>Inter–Inter CBSA connections</strong></p>
+<li><p><strong>Inter-covering inter-county (ICIC) — within-CBSA, within-county</strong></p>
 <p>$$
-(i,i) \in C \tag{Inter-Inter CBSA Conn.}
+\textbf{ICIC}(C) = \bigcup_{i \in C} E_{ic}(i) \tag{ICIC CBSA Conn.}
 $$</p>
 <ul>
-<li>Connections between users in a single county within the CBSA-level covering.</li>
+<li>Connections that live inside a single county <em>and</em> whose county sits inside the CBSA covering. Summed across all counties in $C$.</li>
 </ul>
 </li>
-<li><p><strong>Inter–Cross CBSA connections</strong></p>
+<li><p><strong>Inter-covering cross-county (ICCC) — within-CBSA, between-county</strong></p>
 <p>$$
-\{(i,j) \in C \mid i \neq j\} \tag{Inter-Cross CBSA Conn.}
+\textbf{ICCC}(C) = \bigcup_{\substack{i,\,j \in C \\ i \neq j}} E_o(i)\big|_{j} \tag{ICCC CBSA Conn.}
 $$</p>
 <ul>
-<li>Connections between users in different counties within the CBSA-level covering.</li>
+<li>Connections between two different counties $i \neq j$, both of which sit inside the same CBSA covering.</li>
 </ul>
 </li>
-<li><p><strong>Outgoing CBSA connections</strong></p>
+<li><p><strong>Outer-covering cross-county (OCOC) — outside-CBSA connections</strong></p>
 <p>$$
-\{(i,j) \mid i \in C,\ j \in \tilde{C}\} \tag{Outer-CBSA Conn.}
+\textbf{OCOC}(C) = \bigcup_{\substack{i \in C \\ j \in \tilde{C}}} E_o(i)\big|_{j} \tag{Outer-CBSA Conn.}
 $$</p>
 <ul>
-<li>Connections between users, where one county $i$ is inside the CBSA-level covering and the other county $j$ is outside the covering.</li>
+<li>Connections between a county $i$ inside the CBSA covering and a partner county $j$ outside it. This captures the "external reach" of a CBSA.</li>
 </ul>
 </li>
 <li><p><strong>Total CBSA connections</strong></p>
 <p>$$
-\{(i,j) \mid i \in C, j \in G\} = \{(i,j) + (i,k) \mid i,j \in C, k \in \tilde{C}\} \tag{Total CBSA Conn.}
+\textbf{Total}(C) = \textbf{ICIC}(C) \,\cup\, \textbf{ICCC}(C) \,\cup\, \textbf{OCOC}(C) \tag{Total CBSA Conn.}
 $$</p>
 <ul>
-<li>All connections between users in any county pair, given the county $i$ is in the CBSA-level covering, and $j$ is any other county in the graph. This can also be described as the sum of the Inter-Cover CBSA connections and the Outer-Cover CBSA connections as appears on the RHS above.</li>
+<li>The full degree of the CBSA in $G$. As we'll see in the next section, the fact that these three sets are <em>disjoint</em> is what lets us recover OCOC by subtraction instead of enumeration.</li>
 </ul>
 </li>
 </ul>
+<hr/>
 </div>
 </div>
 </div>
@@ -8093,88 +8110,67 @@ $$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h1 id="Important-Equations:">Important Equations:<a class="anchor-link" href="#Important-Equations:">¶</a></h1><hr/>
-<p>As a quick preface, the SCI equations are included in Meta’s
-<a href="https://data.humdata.org/dataset/e9988552-74e4-4ff4-943f-c782ac8bca87/resource/a0c37eb4-b45c-436d-b2b2-c0c9b1974318/download/documentation-fb-social-connectedness-index-october-2021.pdf">Social Connectedness Index Project documentation</a>.
-From these, we solve for Facebook connections and aggregate county-level
-connection, user, and population estimates to construct CBSA-level
-connections.</p>
+<p>As a quick preface, the SCI equations come from Meta's <a href="https://data.humdata.org/dataset/e9988552-74e4-4ff4-943f-c782ac8bca87/resource/a0c37eb4-b45c-436d-b2b2-c0c9b1974318/download/documentation-fb-social-connectedness-index-october-2021.pdf">Social Connectedness Index Project documentation</a>. From these, we invert to solve for Facebook connection counts at the county level and then aggregate up to CBSAs.</p>
 <ul>
 <li><strong>Combinatorial refresher</strong>
 $$
-            \text{nCk} = \binom{n}{k}
-            := \left\{ \frac{n!}{k!(n-k)!} \;\middle|\; n,k \in \mathbb{N} \right\}
+            \binom{n}{k}
+            := \frac{n!}{k!(n-k)!}, \quad n,k \in \mathbb{N}
             \tag{Combinations}
     $$<ul>
-<li><p>Since a Facebook connection involves <strong>two users</strong>, we set $k = 2$.
-The combination formula answers: <em>given $n$ objects, how many unique
-ways can we choose 2 objects, regardless of order?</em></p>
+<li><p>A Facebook connection involves exactly <strong>two users</strong>, so we set $k = 2$. The combination formula then answers: <em>given $n$ objects, how many unique unordered pairs can we form?</em></p>
 </li>
-<li><p>The numerator $n!$ represents all permutations of $n$ objects, while
-the denominator $(n-k)!$ removes permutations of the unselected objects.
-Division removes duplicate orderings, yielding unique unordered pairs.</p>
-</li>
-<li><p>Because $\text{SCI}_{i,j}$ is indexed by GEOIDs $i$ and $j$ (U.S.
-counties), $n$ represents the number of counties. Also, since the SCI dataset contains symmetric entries, we multiply by $k!$ instead of divide. Thus:</p>
-<p>$$
-          \begin{align}
-          \binom{n}{2}
-          &amp;= \frac{n!}{(n-2)!} \\
-          &amp;= \frac{n \cdot (n-1) \cdot (n-2) \cdots}{(n-2)!} \\
-          &amp;= n \cdot (n-1)
-          \end{align}
-  $$</p>
-</li>
-<li><p>This quantity appears in the homogeneous SCI formula and determines the
-number of rows in the SCI dataset. Since the Meta SCI data include
-symmetric entries $(i,j)$ and $(j,i)$, as well as self-pairs $(i,i)$,
-the total number of rows is:</p>
+<li><p>There are two places this matters in our setup:</p>
+<p><strong>(1) Within-county user pairs.</strong> With $|S_i|$ users in county $i$, the number of <em>ordered</em> (user, other user) pairs is $|S_i| \cdot (|S_i| - 1)$, exactly twice the unordered count $\binom{|S_i|}{2}$. Meta's homogeneous SCI formula uses the <em>ordered</em> count in its denominator, which is why the within-county connection equation below has $|S_i|(|S_i|-1)$ rather than $\binom{|S_i|}{2}$ — each Facebook friendship contributes one edge in each direction.</p>
+<p><strong>(2) Cross-county GEOID pairs in the SCI dataset.</strong> Since $\text{SCI}_{i,j}$ is indexed by GEOIDs $i$ and $j$, the same accounting determines the <em>number of rows</em> in the SCI dataset. With $n_{\text{GEOID}}$ counties, symmetric off-diagonal entries (both $(i,j)$ and $(j,i)$ are recorded), and self-pairs $(i,i)$:</p>
 <p>$$
           \text{SCI Row Entries}
           = 2 \cdot \binom{n_{\text{GEOID}}}{2} + n_{\text{GEOID}}
+          = n_{\text{GEOID}}^2
           \tag{Total SCI Row Entries}
   $$</p>
+<p>For $n_{\text{GEOID}} = 3{,}141$ cleaned U.S. counties, this gives $9{,}865{,}881$ rows, matching what we get after the cleaning step.</p>
 </li>
 </ul>
 </li>
 </ul>
 <h2 id="SCI-Equations:">SCI Equations:<a class="anchor-link" href="#SCI-Equations:">¶</a></h2><hr/>
 <ul>
-<li><p><strong>Homogeneous SCI (within-county)</strong><br/>
-Represents social connectedness within a county:
+<li><p><strong>Homogeneous SCI (within-county)</strong> — represents the average connection density among ordered user pairs in a single county:
 $$
      \text{SCI}_{i,i}
     = \frac{\text{FB Conn.}_{i,i}}
-    {\text{FB\_Users}_{i} \cdot (\text{FB\_Users}_{i} - 1)}
+    {|S_i| \cdot (|S_i| - 1)}
     \tag{Homogeneous SCI}
     $$</p>
 </li>
-<li><p><strong>Heterogeneous SCI (cross-county)</strong><br/>
-Represents social connectedness between two different counties:
+<li><p><strong>Heterogeneous SCI (cross-county)</strong> — represents the average connection density between two different counties:
 $$
      \text{SCI}_{i,j}
      = \frac{\text{FB Conn.}_{i,j}}
-     {\text{FB\_Users}_{i} \cdot \text{FB\_Users}_{j}}
+     {|S_i| \cdot |S_j|}
      \tag{Heterogeneous SCI}
      $$</p>
 </li>
 </ul>
+<p>We <em>invert</em> these two relations to solve for the connection counts, which is what we actually want to study.</p>
 <h2 id="Connections-Equations:">Connections Equations:<a class="anchor-link" href="#Connections-Equations:">¶</a></h2><hr/>
 <ul>
-<li><h3 id="County-level-Connections:">County-level Connections:<a class="anchor-link" href="#County-level-Connections:">¶</a></h3><ul>
-<li><p><strong>Inner-county Facebook connections</strong>
+<li><h3 id="County-level-connections:">County-level connections:<a class="anchor-link" href="#County-level-connections:">¶</a></h3><ul>
+<li><p><strong>Inter-county Facebook connections</strong>
 $$
                    \text{FB Conn.}_{i,i}
                    = \text{SCI}_{i,i}
-                   \cdot \big(\text{FB\_Users}_{i}
-                   \cdot (\text{FB\_Users}_{i} - 1)\big)
-                   \tag{Inner County Conn.}
+                   \cdot \big(|S_i|
+                   \cdot (|S_i| - 1)\big)
+                   \tag{Inter-County Conn.}
            $$</p>
 </li>
 <li><p><strong>Outer-county (cross-county) Facebook connections</strong>
 $$
                    \text{FB Conn.}_{i,j}
                    = \text{SCI}_{i,j}
-                   \cdot (\text{FB\_Users}_{i} \cdot \text{FB\_Users}_{j})
+                   \cdot \big(|S_i| \cdot |S_j|\big)
                    \tag{Outgoing County Conn.}
            $$</p>
 </li>
@@ -8186,10 +8182,10 @@ $$
                    + \sum_{\substack{j \in G_{\text{County}} \\ j \neq i}}
                    \text{FB Conn.}_{i,j} \\
                    &amp;= \text{SCI}_{i,i}
-                   \cdot \big(\text{FB\_Users}_{i}
-                   \cdot (\text{FB\_Users}_{i} - 1)\big)
+                   \cdot \big(|S_i|
+                   \cdot (|S_i| - 1)\big)
                    + \sum_{\substack{j \in \text{Counties} \\ j \neq i}}
-                   \text{FB Conn.}_{i,j}
+                   \text{SCI}_{i,j} \cdot |S_i| \cdot |S_j|
                    \end{align}
                    \tag{Total County Conn.}
            $$</p>
@@ -8199,69 +8195,39 @@ $$
 </ul>
 <hr/>
 <ul>
-<li><h3 id="CBSA-level-Connections:">CBSA-level Connections:<a class="anchor-link" href="#CBSA-level-Connections:">¶</a></h3><ul>
+<li><h3 id="CBSA-level-connections:">CBSA-level connections:<a class="anchor-link" href="#CBSA-level-connections:">¶</a></h3><p>SCI is only defined at county-to-county granularity, so the CBSA-level connection counts are <em>built up</em> by summing county-level connections across the counties belonging to each CBSA.</p>
+<ul>
 <li><p><strong>Inter-covering inter-county CBSA-level connections (ICIC)</strong>
 $$
-                   \textbf{ICIC}_{i}
-                   = \left[
-                   \sum_{i \in C}
+                   \textbf{ICIC}_{C}
+                   = \sum_{i \in C}
                    \text{SCI}_{i,i}
-                   \cdot (\text{FB\_Users}_{i}
-                   \cdot (\text{FB\_Users}_{i} - 1))
-                   \right]
+                   \cdot |S_i| \cdot (|S_i| - 1)
                    \tag{ICIC Conn.}
            $$</p>
 </li>
 <li><p><strong>Inter-covering cross-county CBSA-level connections (ICCC)</strong>
 $$
-                  \textbf{ICCC}_{i,j}
-                  = \left[
-                  \sum_{\substack{(i,j) \in C \\ i \neq j}}
+                  \textbf{ICCC}_{C}
+                  = \sum_{\substack{i, j \in C \\ i \neq j}}
                   \text{SCI}_{i,j}
-                  \cdot (\text{FB\_Users}_{i}
-                  \cdot \text{FB\_Users}_{j})
-                  \right]
+                  \cdot |S_i| \cdot |S_j|
                   \tag{ICCC Conn.}
           $$</p>
 </li>
 <li><p><strong>Outer-covering CBSA-level connections (OCOC)</strong>
 $$
-                   \textbf{OCOC}_{i}
-                   = \left[
-                   \sum_{\substack{(i,j) \mid i \in C,\ j \in \tilde{C}}}
+                   \textbf{OCOC}_{C}
+                   = \sum_{\substack{i \in C,\ j \in \tilde{C}}}
                    \text{SCI}_{i,j}
-                   \cdot (\text{FB\_Users}_{i}
-                   \cdot \text{FB\_Users}_{j})
-                   \right]
+                   \cdot |S_i| \cdot |S_j|
                    \tag{Outer CBSA Conn.}
            $$</p>
 </li>
 <li><p><strong>Total CBSA-level Facebook connections</strong>
 $$
-                   \begin{align}
-                   \textbf{Total}_{i}
-                   =\;&amp;
-                   \left[
-                   \sum_{i \in C}
-                   \text{SCI}_{i,i}
-                   \cdot (\text{FB\_Users}_{i}
-                   \cdot (\text{FB\_Users}_{i} - 1))
-                   \right] \\
-                   &amp;+
-                   \left[
-                   \sum_{\substack{(i,j) \in C \\ i \neq j}}
-                   \text{SCI}_{i,j}
-                   \cdot (\text{FB\_Users}_{i}
-                   \cdot \text{FB\_Users}_{j})
-                   \right] \\
-                   &amp;+
-                   \left[
-                   \sum_{\substack{(i,j) \in G \\ j \in \tilde{C}}}
-                   \text{SCI}_{i,j}
-                   \cdot (\text{FB\_Users}_{i}
-                   \cdot \text{FB\_Users}_{j})
-                   \right]
-                   \end{align}
+                   \textbf{Total}_{C}
+                   = \textbf{ICIC}_{C} + \textbf{ICCC}_{C} + \textbf{OCOC}_{C}
                    \tag{Total CBSA Conn.}
            $$</p>
 </li>
@@ -8280,76 +8246,66 @@ $$
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Symmetry,-SCI,-and-Connections:">Symmetry, SCI, and Connections:<a class="anchor-link" href="#Symmetry,-SCI,-and-Connections:">¶</a></h2><ul>
-<li><p>Since SCI is not defined at the CBSA level, we compute CBSA-level total connections by summing the total connections of all counties within the CBSA covering. This is valid because the total number of connections in the graph is <strong>invariant under topological coverings</strong>—that is, the number of connections does not change whether we consider county-level or CBSA-level partitions.</p>
+<li><p>Since SCI is not defined at the CBSA level, we compute CBSA-level total connections by summing the total connections of all counties within the CBSA covering. This is valid because the total number of connections in the graph is <strong>invariant under topological coverings</strong> — that is, the number of connections does not change whether we consider county-level or CBSA-level partitions.</p>
 </li>
-<li><p>This invariance allows us to exploit the fact that while the <strong>distribution</strong> of connections across county GEOIDs ($C_{\text{GEOID}}$) changes, the <strong>total number of connections in $G$ is conserved</strong>. As a result, we can algebraically manipulate the previously defined quantities to recover <strong>OCOC</strong> in terms of <strong>ICIC</strong>, <strong>ICCC</strong>, and <strong>Total</strong>, rather than computing $\textbf{OCOC}_i$ directly.</p>
-<p>This approach is necessary due to the symmetry of FIPS code pairs in the SCI dataset.</p>
+<li><p>This invariance lets us exploit the fact that, while the <em>distribution</em> of connections across county GEOIDs changes when we coarse-grain to CBSAs, the <em>total number of connections in $G$ is conserved</em>. As a result, we can algebraically recover <strong>OCOC</strong> in terms of <strong>ICIC</strong>, <strong>ICCC</strong>, and <strong>Total</strong>, rather than computing $\textbf{OCOC}_{C}$ directly.</p>
+<p>This approach is necessary due to the symmetry of FIPS code pairs in the SCI dataset:</p>
 <ul>
-<li><p>Attempting to <em>unsymmetrize</em> the SCI dataset using the <code>user_loc</code> or <code>fr_loc</code> columns—by removing non-unique FIPS–FIPS pairs—introduces bias toward counties whose FIPS codes appear first in the dataframe. This process also effectively converts the graph into an undirected one, since only $(i,j)$ would remain and not $(j,i)$. Depending on downstream merges or indexing operations, this can lead to significant issues. For this reason, <strong>we do not unsymmetrize the directed SCI dataset</strong>.</p>
+<li><p>Attempting to <em>unsymmetrize</em> the SCI dataset using the <code>user_loc</code> or <code>fr_loc</code> columns — by removing duplicate FIPS-FIPS pairs in either direction — introduces a bias toward whichever county's FIPS code happens to appear first in the dataframe (typically the lower-numbered one). This process also effectively converts the graph into an undirected one, since only $(i,j)$ would remain and not $(j,i)$. Depending on downstream merges or indexing operations, this can lead to significant issues. For this reason, <strong>we keep the SCI dataset symmetric throughout the pipeline</strong>.</p>
 </li>
-<li><p>Instead of iterating over the full dataframe and matching FIPS–FIPS pairs explicitly, we group counties by their CBSA codes and sum the total connections (inter + outgoing) for all counties within each CBSA covering. Using the definitions introduced earlier, we obtain:</p>
+<li><p>Instead of iterating over the full dataframe and matching FIPS-FIPS pairs explicitly, we group counties by their CBSA codes and sum the total county-level connections (inter + outgoing) for all counties within each CBSA covering. From the disjoint partition $\textbf{Total}_{C} = \textbf{ICIC}_{C} + \textbf{ICCC}_{C} + \textbf{OCOC}_{C}$, we obtain:</p>
 </li>
 </ul>
 <p>$$
-\textbf{OCOC}_i
-= \textbf{Total}_i
-- \left[\textbf{ICIC}_i + \textbf{ICCC}_{i,j}\right]
+\textbf{OCOC}_{C}
+= \textbf{Total}_{C}
+- \big[\textbf{ICIC}_{C} + \textbf{ICCC}_{C}\big]
 \tag{OCOC}
 $$</p>
 </li>
 </ul>
 <hr/>
 <h2 id="Power-Law-Scaling-Relationships">Power-Law Scaling Relationships<a class="anchor-link" href="#Power-Law-Scaling-Relationships">¶</a></h2><ul>
-<li>We begin by assuming a power-law relationship between the cumulative degree,
-$k_i$, and the GEOID population, $N_i$. This yields the following model:</li>
+<li>We begin by assuming a power-law relationship between the cumulative degree $k_{i,\,t}$ and the GEOID population $N_i$. This is the same functional form that has been observed empirically for face-to-face interactions in cities, GDP, patent counts, and a wide range of other urban metrics:</li>
 </ul>
 <p>$$
-k_i = N_i^{\beta} + \epsilon_i
+k_{i,\,t} = N_i^{\beta} \cdot \epsilon_i
 \tag{Basic Power Law}
 $$</p>
 <ul>
-<li><p>Applying a log–log transformation and using the algebraic properties of
-logarithms, we proceed such that:
+<li><p>Applying a log-log transformation (and treating $\epsilon_i$ as multiplicative noise so that $\log \epsilon_i$ is additive on the log scale), we proceed as:
 $$
 \begin{align}
-  \log(k_i) &amp;= \log(N_{i}^{\beta}) + \log(\epsilon_i) \\\\
+  \log(k_{i,\,t}) &amp;= \log(N_{i}^{\beta}) + \log(\epsilon_i) \\\\
             &amp;= \beta \cdot \log(N_i) + \log(\epsilon_i)
 \end{align}
 \tag{Log-Linear Form}
 $$</p>
 </li>
-<li><p>To recover the scaling exponent $\beta$ and the intercept $\gamma$, we plot each County/GEOID as a point in the plane defined by two GEOID features (eg. the number of connections vs population or metabolic rate vs body mass).</p>
+<li><p>To recover the scaling exponent $\beta$ and the intercept $\gamma$, we plot each county/GEOID as a single point in the plane defined by two GEOID features (e.g., the number of connections vs. population, or — in classical allometry — metabolic rate vs. body mass).</p>
 </li>
-<li><p>By plotting GEOID feature $y$ vs GEOID feature $x$ for all available GEOIDS and fitting a regression, we are essentially identifying a national-level macroscopic trend and relationship between GEOID features by trying to fit a regression on aggregate data vs aggregate data.</p>
+<li><p>By plotting GEOID feature $y$ vs. GEOID feature $x$ for all available GEOIDs and fitting a regression, we are identifying a <em>national-level macroscopic trend</em> between two aggregate features — each county contributes one data point.</p>
 </li>
-<li><p>We plot a log-log linear fit of the two features, as logarithms convert the data to a geometric domain where proportional differences are represented in a consistent manner that is invariant to the scale and units of measurement, and because processes that often appear in biology and social science are multiplicative, rather than additive.</p>
+<li><p>We work in log-log space because logarithms convert proportional differences into additive ones, which is the natural representation for the multiplicative processes that pervade biology and the social sciences, and because they make the data scale-invariant: a doubling of population looks the same whether the baseline is 10,000 or 10,000,000.</p>
 </li>
-<li><p>We then estimate the relationship using <strong>linear regression</strong>, producing a
-scatter plot with a line of best fit. The slope of this line, $\beta$,
-characterizes the power-law scaling relationship between cumulative degree and
-population:</p>
+<li><p>We then estimate the relationship using <strong>linear regression</strong>, producing a scatter plot with a line of best fit. The slope of this line, $\beta$, characterizes the power-law scaling relationship between cumulative degree and population:</p>
 <ul>
-<li><strong>Superlinear:</strong> $\beta &gt; 1$</li>
-<li><strong>Linear:</strong> $\beta = 1$</li>
-<li><strong>Sublinear:</strong> $\beta &lt; 1$</li>
+<li><strong>Superlinear:</strong> $\beta &gt; 1$ — bigger places generate <em>disproportionately</em> more connections per person (typical of within-city interaction, innovation, GDP)</li>
+<li><strong>Linear:</strong> $\beta = 1$ — connections scale exactly with population (per-capita rate is constant)</li>
+<li><strong>Sublinear:</strong> $\beta &lt; 1$ — bigger places have <em>proportionally fewer</em> connections per person (typical of infrastructure economies of scale)</li>
 </ul>
 </li>
-<li><p>This framework lay the foundation for understanding how social connectivity scales with population across counties.</p>
+<li><p>This framework lays the foundation for understanding how social connectivity scales with population across counties.</p>
 </li>
 </ul>
 <hr/>
-<h2 id="Improving-$%5Cbeta$-via-Rescaling">Improving $\beta$ via Rescaling<a class="anchor-link" href="#Improving-$%5Cbeta$-via-Rescaling">¶</a></h2><p>Following <a href="(https://doi.org/10.1098/rsif.2013.0789"><em>Schläpfer et al.</em></a>), we improve estimation of the
-scaling exponent $\beta$ by rescaling the cumulative degree $k_i$:</p>
+<h2 id="Improving-$%5Cbeta$-via-Rescaling">Improving $\beta$ via Rescaling<a class="anchor-link" href="#Improving-$%5Cbeta$-via-Rescaling">¶</a></h2><p>Following <a href="https://doi.org/10.1098/rsif.2013.0789"><em>Schläpfer et al.</em></a>, we improve estimation of the scaling exponent $\beta$ by rescaling the cumulative degree $k_{i,\,t}$:</p>
 <ol>
-<li><strong>Divide cumulative degree by the coverage estimate</strong> of location $i$,
-denoted $s_i$.</li>
-<li><strong>Normalize both population and cumulative degree by their averages</strong>
-to tighten the linear fit and increase the $R^2$ value.</li>
+<li><strong>Divide cumulative degree by the coverage estimate</strong> of location $i$, denoted $s_i$. The motivation: our $k_{i,\,t}$ only counts connections among the Facebook-active subset of residents, so a county with low coverage will look artificially under-connected. Dividing by $s_i$ corrects for this sampling bias and recovers a quantity proportional to the true population-level degree.</li>
+<li><strong>Normalize both population and rescaled cumulative degree by their averages</strong>, which tightens the linear fit and raises the $R^2$ — geometrically, this re-centers the cloud of points on $(1, 1)$ so that the regression isn't sensitive to absolute units.</li>
 </ol>
 <hr/>
-<h3 id="County-level-Rescaling">County-level Rescaling<a class="anchor-link" href="#County-level-Rescaling">¶</a></h3><p>We first apply this methodology at the county level. Since the SCI data are
-already at county-to-county resolution, no initial aggregation step is
-required.</p>
+<h3 id="County-level-rescaling">County-level rescaling<a class="anchor-link" href="#County-level-rescaling">¶</a></h3><p>We first apply this methodology at the county level. Since the SCI data are already at county-to-county resolution, no initial aggregation step is required.</p>
 <ol>
 <li><p><strong>Compute county coverage estimates</strong></p>
 <p>$$
@@ -8360,20 +8316,20 @@ $$</p>
 </li>
 <li><p><strong>Rescale cumulative degree by coverage</strong></p>
 <p>$$
-K_{\text{County}_{r_i}}
-= \frac{k_{\text{County}_i}}{s_{\text{County}_i}}
+K_{r,\,\text{County}_i}
+= \frac{k_{i,\,t}^{(\text{County})}}{s_{\text{County}_i}}
 $$</p>
 </li>
-<li><p><strong>Compute average rescaled degree and average population</strong></p>
+<li><p><strong>Compute averages of the rescaled degree and population over all counties</strong></p>
 <p>$$
-\langle K_{\text{County}_r} \rangle
-= \sum_{i=1}^{n_{\text{County}}}
-  K_{\text{County}_{r_i}} \cdot \frac{1}{n_{\text{County}}}
+\langle K_{r,\,\text{County}} \rangle
+= \frac{1}{n_{\text{County}}} \sum_{i=1}^{n_{\text{County}}}
+  K_{r,\,\text{County}_i}
 $$</p>
 <p>$$
 \langle N_{\text{County}} \rangle
-= \sum_{i=1}^{n_{\text{County}}}
-  N_{\text{County}_i} \cdot \frac{1}{n_{\text{County}}}
+= \frac{1}{n_{\text{County}}} \sum_{i=1}^{n_{\text{County}}}
+  N_{\text{County}_i}
 $$</p>
 </li>
 <li><p><strong>Normalize variables prior to fitting</strong></p>
@@ -8381,25 +8337,22 @@ $$</p>
 <li><p>Normalize population:</p>
 <p>$$
 N_{\text{County}_i}
-= \frac{N_{\text{County}_i}}{\langle N_{\text{County}} \rangle}
+\;\leftarrow\; \frac{N_{\text{County}_i}}{\langle N_{\text{County}} \rangle}
 \tag{County Population Normalization}
 $$</p>
 </li>
 <li><p>Normalize rescaled cumulative degree:</p>
 <p>$$
-K_{\text{County}_{r_i}}
-= \frac{K_{\text{County}_{r_i}}}
-       {\langle K_{\text{County}_r} \rangle}
+K_{r,\,\text{County}_i}
+\;\leftarrow\; \frac{K_{r,\,\text{County}_i}}
+       {\langle K_{r,\,\text{County}} \rangle}
 \tag{Rescaled County Degree}
 $$</p>
 </li>
 </ul>
 </li>
 <li><p><strong>Estimate $\beta$</strong></p>
-<p>Each county is plotted as a point in the plane of log-transformed,
-normalized, rescaled cumulative degree versus log-transformed,
-normalized population. Using SciPy linear regression yields a line of
-best fit whose slope $\beta$ characterizes the scaling relationship:</p>
+<p>Each county is plotted as a point in the plane of log-transformed, normalized, rescaled cumulative degree vs. log-transformed, normalized population. An OLS fit (<code>statsmodels</code>) yields a line of best fit whose slope $\beta$ characterizes the scaling relationship:</p>
 <ul>
 <li><strong>Superlinear:</strong> $\beta &gt; 1$</li>
 <li><strong>Linear:</strong> $\beta = 1$</li>
@@ -8408,7 +8361,8 @@ best fit whose slope $\beta$ characterizes the scaling relationship:</p>
 </li>
 </ol>
 <hr/>
-<h3 id="CBSA-level-Rescaling">CBSA-level Rescaling<a class="anchor-link" href="#CBSA-level-Rescaling">¶</a></h3><ol>
+<h3 id="CBSA-level-rescaling">CBSA-level rescaling<a class="anchor-link" href="#CBSA-level-rescaling">¶</a></h3><p>The same procedure carries over to CBSAs once we've aggregated county-level user and population estimates up to the CBSA covering.</p>
+<ol>
 <li><p><strong>Aggregate county-level user and population estimates</strong></p>
 <p>$$
 |S|_{\text{CBSA}}
@@ -8421,55 +8375,31 @@ $$</p>
 <li><p><strong>Compute CBSA coverage estimates</strong></p>
 <p>$$
 s_{\text{CBSA}}
-= \frac{|S_{\text{CBSA}}|}{N_{\text{CBSA}}}
-= \sum_{i \in C_{\text{CBSA}}}
-  \frac{|S_i|}{N_i}
+= \frac{|S|_{\text{CBSA}}}{N_{\text{CBSA}}}
 $$</p>
 </li>
 <li><p><strong>Rescale CBSA cumulative degree</strong></p>
 <p>$$
-K_{\text{CBSA}_{r_i}}
-= \frac{k_{\text{CBSA}_i}}{s_{\text{CBSA}_i}}
+K_{r,\,\text{CBSA}}
+= \frac{k_t^{(\text{CBSA})}}{s_{\text{CBSA}}}
 $$</p>
 </li>
-<li><p><strong>Compute average rescaled degree and population</strong></p>
+<li><p><strong>Compute averages of the rescaled degree and population over all CBSAs</strong></p>
 <p>$$
-\langle K_{\text{CBSA}_r} \rangle
-= \sum_{i=1}^{n_{\text{CBSA}}}
-  K_{\text{CBSA}_{r_i}} \cdot \frac{1}{n_{\text{CBSA}}}
+\langle K_{r,\,\text{CBSA}} \rangle
+= \frac{1}{n_{\text{CBSA}}}\sum_{i=1}^{n_{\text{CBSA}}}
+  K_{r,\,\text{CBSA}_i}
 $$</p>
 <p>$$
 \langle N_{\text{CBSA}} \rangle
-= \sum_{i=1}^{n_{\text{CBSA}}}
-  N_{\text{CBSA}_i} \cdot \frac{1}{n_{\text{CBSA}}}
+= \frac{1}{n_{\text{CBSA}}}\sum_{i=1}^{n_{\text{CBSA}}}
+  N_{\text{CBSA}_i}
 $$</p>
 </li>
-<li><p><strong>Normalize variables prior to fitting</strong></p>
-<ul>
-<li><p>Normalize population:</p>
-<p>$$
-N_{\text{CBSA}_i}
-= \frac{N_{\text{CBSA}_i}}{\langle N_{\text{CBSA}} \rangle}
-\tag{Normalized CBSA Population}
-$$</p>
-</li>
-<li><p>Normalize rescaled cumulative degree:</p>
-<p>$$
-K_{\text{CBSA}_{r_i}}
-= \frac{K_{\text{CBSA}_{r_i}}}
-       {\langle K_{\text{CBSA}_r} \rangle}
-\tag{Normalized CBSA Degree}
-$$</p>
-</li>
-</ul>
+<li><p><strong>Normalize variables prior to fitting</strong> — analogous to steps 4a/4b above, but with CBSA averages.</p>
 </li>
 <li><p><strong>Estimate $\beta$</strong></p>
-<p>Each CBSA is plotted as a point in the plane of log-transformed,
-normalized, rescaled cumulative degree versus log-transformed,
-normalized population. SciPy linear regression yields a best-fit line,
-whose slope $\beta$ reveals the power-law relationship between cumulative
-degree and population at the CBSA level. When calculating the fits for MSAs
-and muSAs, we calculate the averages using only MSAs and muSAs respectively.</p>
+<p>Each CBSA is plotted as a point in the plane of log-transformed, normalized, rescaled cumulative degree vs. log-transformed, normalized population. The OLS fit yields a best-fit line whose slope $\beta$ characterizes the scaling at the CBSA level. When we compute MSA-only and muSA-only fits, we re-take the averages using <em>only</em> MSAs (or <em>only</em> muSAs) so that the normalization is internal to each subpopulation and not contaminated by the size mismatch between metropolitan and micropolitan areas.</p>
 </li>
 </ol>
 <hr/>
@@ -8483,7 +8413,15 @@ and muSAs, we calculate the averages using only MSAs and muSAs respectively.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Code:">Code:<a class="anchor-link" href="#Code:">¶</a></h1>
+<h1 id="Code:">Code:<a class="anchor-link" href="#Code:">¶</a></h1><p>The remainder of this notebook is the executable implementation of the framework above. Cells are organized so that:</p>
+<ol>
+<li><strong>Requirements</strong> — libraries and raw datasets are loaded once.</li>
+<li><strong>Data Cleaning</strong> — the SCI, ESRI, and crosswalk files are merged into the four export dataframes (<code>df_outer_county</code>, <code>df_cbsa</code>, <code>df_msa</code>, <code>df_musa</code>) that all downstream sections consume.</li>
+<li><strong>Data Exploration</strong> — histograms with KDE/parametric fits and choropleth maps inspect the distributions and geographic structure of connections.</li>
+<li><strong>Scaling</strong> — log-log OLS regressions produce the $\beta$ estimates summarized in the results table at the bottom of the notebook.</li>
+<li><strong>Demographics</strong> — Census-block-level analyses of the Hamilton Beach (and comparison) communities.</li>
+</ol>
+<p>The scripts under <code>scripts/</code> mirror these cells one-to-one and can be run standalone if you prefer not to re-execute the notebook.</p>
 </div>
 </div>
 </div>
@@ -8494,7 +8432,7 @@ and muSAs, we calculate the averages using only MSAs and muSAs respectively.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Requirements:">Requirements:<a class="anchor-link" href="#Requirements:">¶</a></h2>
+<h2 id="Requirements:">Requirements:<a class="anchor-link" href="#Requirements:">¶</a></h2><p><code>pandas</code>, <code>numpy</code>, <code>matplotlib</code>, <code>geopandas</code>, <code>scipy</code>, <code>statsmodels</code>, and <code>scikit-learn</code>. The choropleth section additionally uses <code>esda</code> for Moran's I (commented out by default), and reads TIGER/Line shapefiles via <code>geopandas.read_file</code>. Memory note: the raw SCI TSV is ~180 MB and decompresses to a ~10M-row dataframe — be mindful when running this on a constrained machine.</p>
 </div>
 </div>
 </div>
@@ -8505,7 +8443,7 @@ and muSAs, we calculate the averages using only MSAs and muSAs respectively.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Libraries:">Libraries:<a class="anchor-link" href="#Libraries:">¶</a></h3>
+<h3 id="Libraries:">Libraries:<a class="anchor-link" href="#Libraries:">¶</a></h3><p>All the third-party packages we'll need across data cleaning, statistical fitting, and plotting. We import them up front so each downstream cell can be run in isolation after the kernel restarts.</p>
 </div>
 </div>
 </div>
@@ -8541,7 +8479,7 @@ and muSAs, we calculate the averages using only MSAs and muSAs respectively.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Data-Sets:">Data Sets:<a class="anchor-link" href="#Data-Sets:">¶</a></h3>
+<h3 id="Data-Sets:">Data Sets:<a class="anchor-link" href="#Data-Sets:">¶</a></h3><p>Load every raw source in one place so the rest of the notebook is decoupled from file paths. <code>dtype=str</code> is used wherever a column will eventually be a FIPS code or GEOID, because pandas would otherwise drop the leading zeros that matter for joining (e.g., <code>01001</code> for Autauga County, AL).</p>
 </div>
 </div>
 </div>
@@ -8576,7 +8514,17 @@ and muSAs, we calculate the averages using only MSAs and muSAs respectively.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Data-Cleaning:">Data Cleaning:<a class="anchor-link" href="#Data-Cleaning:">¶</a></h2>
+<h2 id="Data-Cleaning:">Data Cleaning:<a class="anchor-link" href="#Data-Cleaning:">¶</a></h2><p>This cell takes the raw SCI, ESRI, and BLS crosswalk files and produces the four export dataframes that the rest of the notebook (and the standalone scripts) consume:</p>
+<ul>
+<li><code>df_inner_county</code> — one row per county, with <code>inter_county_connections</code> (within), <code>outer_county_connections</code> (cross-county sum), <code>total connections</code>, plus <code>user_est</code>, <code>pop_est</code>, <code>coverage est</code>, and CBSA metadata.</li>
+<li><code>df_cbsa</code> — one row per CBSA, with the three CBSA-level connection types (ICIC, ICCC, OCOC), plus aggregated <code>user_est</code> / <code>pop_est</code> and rescaled / normalized variants used for the regressions.</li>
+<li><code>df_msa</code>, <code>df_musa</code> — subsets of <code>df_cbsa</code> for which the normalization averages have been recomputed <em>within</em> the metropolitan-only and micropolitan-only subpopulations, respectively, so each fit is internally consistent.</li>
+</ul>
+<p>Notable manual fixes inside this cell:</p>
+<ul>
+<li><strong>Alaskan census-area reorganization</strong>: <code>02261</code> (Valdez-Cordova) was split into <code>02063</code> (Chugach) and <code>02066</code> (Copper River) after the 2020 redistricting. We re-merge them into <code>02261</code> so the SCI (which still uses the pre-split codes' replacement) joins cleanly to ESRI.</li>
+<li><strong><code>15005</code> Kalawao County, HI</strong> is dropped — it has a population in the low double digits and breaks log-scale plots.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -8741,7 +8689,7 @@ and muSAs, we calculate the averages using only MSAs and muSAs respectively.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Data-Exploration:">Data Exploration:<a class="anchor-link" href="#Data-Exploration:">¶</a></h2>
+<h2 id="Data-Exploration:">Data Exploration:<a class="anchor-link" href="#Data-Exploration:">¶</a></h2><p>Before fitting any regressions, we want to verify that the cleaned data behaves the way the literature suggests: heavy-tailed distributions of connections, roughly log-normal user/population marginals, and visible geographic structure in the connection counts. The next two subsections — histograms and choropleths — are about building that confidence.</p>
 </div>
 </div>
 </div>
@@ -8752,7 +8700,13 @@ and muSAs, we calculate the averages using only MSAs and muSAs respectively.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Distributions-and-Histograms:">Distributions and Histograms:<a class="anchor-link" href="#Distributions-and-Histograms:">¶</a></h3>
+<h3 id="Distributions-and-Histograms:">Distributions and Histograms:<a class="anchor-link" href="#Distributions-and-Histograms:">¶</a></h3><p>For each of the connection / user / population / coverage variables — at the County, CBSA, MSA, and muSA levels — we plot a histogram with:</p>
+<ul>
+<li>A non-parametric <strong>Gaussian KDE</strong> as the empirical reference PDF.</li>
+<li>Parametric fits suggested by the urban-scaling literature, evaluated against that KDE via RMSE.</li>
+<li>The 25th and 75th percentiles shaded, plus markers for the mean and median.</li>
+</ul>
+<p>The point is two-fold: (1) confirm that the variables we're about to log-transform are well-suited to a log-log fit (i.e., they look log-normal or close to it), and (2) flag any GEOIDs that sit deep in the tails so we know what's pulling the regression around.</p>
 </div>
 </div>
 </div>
@@ -8763,20 +8717,17 @@ and muSAs, we calculate the averages using only MSAs and muSAs respectively.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<ul>
-<li>Quick Notes:<ol>
-<li>We choose the following parametric PDFs according to the documentation of <a href="https://doi.org/10.1098/rsif.2013.0789">Schlapfer et. al.</a>, which are also commonly found when describing social networks:<ul>
-<li>Normal</li>
-<li>Log-Normal</li>
-<li>Pareto</li>
-<li>General Pareto (20th percentile tail)</li>
-<li>Skew Normal</li>
+<p><strong>Quick Notes:</strong></p>
+<ol>
+<li>We choose parametric PDFs in line with the documentation of <a href="https://doi.org/10.1098/rsif.2013.0789"><em>Schläpfer et al.</em></a>, and with what is typically found when describing social and urban networks:<ul>
+<li><strong>Normal</strong> — sanity-check baseline; if the data is genuinely log-normal in the original units, the <em>log-transformed</em> histogram should look approximately Normal.</li>
+<li><strong>Log-Normal</strong> — the most common candidate for connection counts (multiplicative growth processes).</li>
+<li><strong>Skew-Normal</strong> — accommodates the moderate asymmetry typical of these distributions without the heavy tails of a Pareto.</li>
+<li><strong>Generalized Pareto (fit on the top 75% tail, i.e., values above the 25th percentile)</strong> — captures tail behavior without assuming the tail starts at zero.</li>
 </ul>
 </li>
-<li>To form a PDF of best fit for each histogram, I use the method of Kernel Density Estimates (KDE) with a Gaussian kernel as a form of non-parametric inference. Then, I compare the parametric PDFs suggested by Schlapfer et. al. to our KDE PDF by computing the root mean squared error (RMSE).</li>
+<li>To form a non-parametric PDF of best fit for each histogram, I use a Gaussian-kernel <strong>KDE</strong>. I then compare the parametric PDFs above to the KDE PDF by computing the <strong>root mean squared error (RMSE)</strong> at the bin centers. The lowest-RMSE parametric is reported as the closest fit. This is a deliberately simple comparison — it doesn't penalize parameter count or test goodness-of-fit formally — but it is enough to flag which of the canonical PDFs is <em>closest</em> to what the data look like.</li>
 </ol>
-</li>
-</ul>
 </div>
 </div>
 </div>
@@ -9370,7 +9321,14 @@ and muSAs, we calculate the averages using only MSAs and muSAs respectively.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Scaling-Exponent-Estimation-and-log-log-Regression-plots:">Scaling Exponent Estimation and log-log Regression plots:<a class="anchor-link" href="#Scaling-Exponent-Estimation-and-log-log-Regression-plots:">¶</a></h3>
+<h3 id="Scaling-Exponent-Estimation-and-log-log-Regression-plots:">Scaling Exponent Estimation and log-log Regression plots:<a class="anchor-link" href="#Scaling-Exponent-Estimation-and-log-log-Regression-plots:">¶</a></h3><p>This is the headline analysis of the notebook. For each region type (County, CBSA, MSA, muSA) and each network type (Inter / Outgoing / Total), we:</p>
+<ol>
+<li>Drop any rows where the regressor or response is non-positive (log is undefined there).</li>
+<li>Log-transform both the normalized rescaled cumulative degree $K_r / \langle K_r \rangle$ and the normalized population $N / \langle N \rangle$.</li>
+<li>Fit an OLS line using <code>statsmodels</code>, reporting $\beta$ (slope), $\gamma$ (intercept), $R^2$, RMSE, RSE, and the 95% CIs on both parameters.</li>
+<li>Overlay the mean, median, and modal data points to give a visual sense of where the bulk of the GEOID distribution sits along the fit.</li>
+</ol>
+<p>The slope $\beta$ is the quantity we care about — its position relative to 1 tells us whether social connectivity scales superlinearly, linearly, or sublinearly with population. The 95% CI on $\beta$ tells us whether the difference from 1 is statistically meaningful.</p>
 </div>
 </div>
 </div>
@@ -9702,7 +9660,14 @@ and muSAs, we calculate the averages using only MSAs and muSAs respectively.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Choropleth-Plots:">Choropleth Plots:<a class="anchor-link" href="#Choropleth-Plots:">¶</a></h2>
+<h2 id="Choropleth-Plots:">Choropleth Plots:<a class="anchor-link" href="#Choropleth-Plots:">¶</a></h2><p>Choropleths let us check that the connection counts have the <em>geographic</em> structure we expect — large metros lit up, sparse rural counties dim, coastal corridors visible — before we collapse everything to a single regression slope. We produce four sets of choropleths:</p>
+<ol>
+<li><strong>Raw connection counts</strong> — Inter-County, Outgoing County, Total County (log-color-scaled, because the counts span ~6 decades).</li>
+<li><strong>Population-related statistics</strong> — User estimates $|S_i|$, population estimates $N_i$, and coverage $s_i$.</li>
+<li><strong>Per-capita connections</strong> — connections divided by population, on a linear color scale.</li>
+<li><strong>Per-user connections</strong> — connections divided by Facebook user count, also linear.</li>
+</ol>
+<p>The per-capita and per-user views are the most diagnostic: if the rescaling step in our regressions has done its job, the per-user choropleth should look noticeably <em>flatter</em> than the raw-count choropleth, because we've removed the population-scaling baseline.</p>
 </div>
 </div>
 </div>
@@ -10037,7 +10002,16 @@ and muSAs, we calculate the averages using only MSAs and muSAs respectively.</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Demographics-Plots:">Demographics Plots:<a class="anchor-link" href="#Demographics-Plots:">¶</a></h2>
+<h2 id="Demographics-Plots:">Demographics Plots:<a class="anchor-link" href="#Demographics-Plots:">¶</a></h2><p>The demographics section zooms from the national scaling picture down to a handful of NYC census blocks — specifically, the Hamilton Beach and Howard Beach blocks in Queens (FIPS prefix <code>360810884006</code>), which are the focus communities for CLIMA's coastal-flood-risk interviews, with Red Hook (Brooklyn) included later as a comparison.</p>
+<p>For each block (and the aggregate across all selected blocks), we generate:</p>
+<ul>
+<li><strong>Age/Sex population pyramids</strong> with the NYC census-block average overlaid as dots, so each block can be read against the citywide baseline.</li>
+<li><strong>Race/Ethnicity distributions</strong> (White non-Hispanic, Black non-Hispanic, Asian non-Hispanic, Hispanic of any race), again with citywide averages overlaid.</li>
+<li><strong>Household size distributions</strong> (1-person through 5+-person, with 5+, 6, 7+ collapsed for readability).</li>
+<li><strong>Housing occupancy</strong> (occupied vs. vacant).</li>
+<li><strong>Housing tenure</strong> (owner- vs. renter-occupied) — the most policy-relevant variable for the homeowner-mobility framing of CLIMA.</li>
+</ul>
+<p>The data source for everything in this cell is the 2020 Decennial Census DHC files at the block level (H3, H4, H9, P3, P5, P12).</p>
 </div>
 </div>
 </div>
@@ -11192,7 +11166,8 @@ Total housing units: 65
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Pi-Charts-of-Educational-&amp;-Household-Income-Levels:">Pi Charts of Educational &amp; Household Income Levels:<a class="anchor-link" href="#Pi-Charts-of-Educational-&amp;-Household-Income-Levels:">¶</a></h2>
+<h2 id="Pie-Charts-of-Educational-&amp;-Household-Income-Levels:">Pie Charts of Educational &amp; Household Income Levels:<a class="anchor-link" href="#Pie-Charts-of-Educational-&amp;-Household-Income-Levels:">¶</a></h2><p>A side-by-side look at <strong>educational attainment</strong> and <strong>household income</strong> for Hamilton Beach (Queens, green palette) and Red Hook (Brooklyn, blue palette). Both communities sit in FEMA-designated coastal flood zones, but they differ markedly in socioeconomic composition — Hamilton Beach skews toward homeowner-occupied middle-income households, Red Hook toward a more income-bimodal renter population — and the pie charts make that contrast immediately visible.</p>
+<p>The underlying data is IPUMS NHGIS <code>nhgis0004_ds267_20235</code> (ACS 5-year, block-group resolution). Education categories are collapsed from the 24 ACS bins into 9 readable buckets (No HS / Only HS / GED / Incomplete College / Associate / Bachelor / Master / Professional / Doctorate); income from 16 ACS bins into 9 buckets (<code>&lt;$10k</code> through <code>$200k+</code>).</p>
 </div>
 </div>
 </div>
@@ -11445,6 +11420,7 @@ Total housing units: 65
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <hr/>
+<h1 id="Results-&amp;-Discussion">Results &amp; Discussion<a class="anchor-link" href="#Results-&amp;-Discussion">¶</a></h1><hr/>
 </div>
 </div>
 </div>
@@ -11455,7 +11431,8 @@ Total housing units: 65
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Scaling-Estimates-Table:">Scaling Estimates Table:<a class="anchor-link" href="#Scaling-Estimates-Table:">¶</a></h2><table>
+<h2 id="Scaling-Estimates-Table">Scaling Estimates Table<a class="anchor-link" href="#Scaling-Estimates-Table">¶</a></h2><p>The fitted $\beta$ values across all four GEOID levels and all three network types are summarized below. CIs are 95% via the $t$-distribution with $N-2$ degrees of freedom.</p>
+<table>
 <thead>
 <tr>
 <th>GEOID Type</th>
@@ -11525,19 +11502,6 @@ Total housing units: 65
 <td>------------------</td>
 </tr>
 <tr>
-<td>------------</td>
-<td>--------</td>
-<td>--------------</td>
-<td>-------------------</td>
-<td>---------------</td>
-<td>---------------</td>
-<td>---------------</td>
-<td>---------</td>
-<td>----------------</td>
-<td>--------------</td>
-<td>------------------</td>
-</tr>
-<tr>
 <td>CBSA</td>
 <td>917</td>
 <td>Total</td>
@@ -11590,19 +11554,6 @@ Total housing units: 65
 <td>------------------</td>
 </tr>
 <tr>
-<td>------------</td>
-<td>--------</td>
-<td>--------------</td>
-<td>-------------------</td>
-<td>---------------</td>
-<td>---------------</td>
-<td>---------------</td>
-<td>---------</td>
-<td>----------------</td>
-<td>--------------</td>
-<td>------------------</td>
-</tr>
-<tr>
 <td>MSA</td>
 <td>381</td>
 <td>Total</td>
@@ -11640,19 +11591,6 @@ Total housing units: 65
 <td>433,696,455</td>
 <td></td>
 <td></td>
-</tr>
-<tr>
-<td>------------</td>
-<td>--------</td>
-<td>--------------</td>
-<td>-------------------</td>
-<td>---------------</td>
-<td>---------------</td>
-<td>---------------</td>
-<td>---------</td>
-<td>----------------</td>
-<td>--------------</td>
-<td>------------------</td>
 </tr>
 <tr>
 <td>------------</td>
@@ -11721,6 +11659,36 @@ Total housing units: 65
 </tr>
 </tbody>
 </table>
+<h3 id="Reading-the-scaling-table">Reading the scaling table<a class="anchor-link" href="#Reading-the-scaling-table">¶</a></h3><ul>
+<li><p><strong>Inner connections are superlinear</strong> at every GEOID level — $\beta_{\text{Inner}} \in [1.054, 1.082]$ — and the entire 95% CI sits <em>above</em> 1 at the County, CBSA, and MSA levels. This is the same qualitative finding as <em>Schläpfer et al.</em> (2014) for face-to-face / phone interactions within cities: the larger the place, the <em>more than proportionally</em> its residents interact with each other. Our point estimate at the County level ($\beta = 1.062$) is at the low end of what they report for European urban areas (typically $\beta \approx 1.1\!-\!1.2$), which we read as a real but modest superlinearity at U.S. county resolution.</p>
+</li>
+<li><p><strong>Outgoing connections are sublinear</strong> at every level — $\beta_{\text{Outgoing}} \in [0.914, 0.945]$ — and again the 95% CI excludes 1 at the County, CBSA, and MSA levels. Larger places generate <em>proportionally fewer</em> outgoing per-capita ties, which is consistent with denser local social networks crowding out long-range ties as a place grows.</p>
+</li>
+<li><p><strong>Total connections sit just below 1</strong> — $\beta_{\text{Total}} \in [0.969, 0.982]$ — i.e., the superlinearity of the inner ties is approximately, but not quite, cancelled by the sublinearity of the outgoing ties. The Total exponent is the closest of the three to exact linearity, which is intuitive: once you sum within and across, the total degree of a place should be <em>roughly</em> proportional to its population.</p>
+</li>
+<li><p><strong>muSA fits are noisier</strong> ($R^2 \approx 0.69\!-\!0.82$) than MSA fits ($R^2 \approx 0.92\!-\!0.96$). This is expected — micropolitan areas are smaller and span a narrower range of population, so the regression has less leverage. The muSA Total CI ($[0.931, 1.007]$) actually <em>includes</em> 1.0, so we cannot reject pure linearity for total connectivity in the micropolitan subsample.</p>
+</li>
+<li><p><strong>Stability across GEOID types</strong>: the fact that $\beta_{\text{Inner}}$, $\beta_{\text{Outgoing}}$, and $\beta_{\text{Total}}$ stay within a tight band as we change GEOID resolution (County $\to$ CBSA $\to$ MSA) is a sanity check on the rescaling procedure — the exponents are not artifacts of how we drew the geographic partition.</p>
+</li>
+</ul>
+<hr/>
+<h3 id="What-the-histograms-told-us">What the histograms told us<a class="anchor-link" href="#What-the-histograms-told-us">¶</a></h3><p>Before fitting any regression, the connection / user / population histograms in the <strong>Distributions</strong> section confirm the assumptions we need:</p>
+<ul>
+<li>The <strong>log-transformed</strong> Inter-, Outgoing-, and Total-connection counts at all four GEOID levels are close to Normal in shape — i.e., the raw counts are roughly <strong>log-normal</strong>, which is the canonical distribution arising from multiplicative growth processes. This is precisely what justifies treating $\epsilon_i$ in the Basic Power Law as multiplicative noise and fitting in log-log space.</li>
+<li>The fitted Log-Normal PDF has the lowest RMSE vs. KDE for the bulk of variables, with the SkewNormal occasionally edging it out for the more right-skewed populations.</li>
+<li>The Generalized Pareto fit to the top 75% tail captures the heavy upper tail (the few outsize metros that dominate the absolute connection counts) without forcing the bulk distribution into a heavy-tailed family.</li>
+</ul>
+<h3 id="What-the-choropleths-told-us">What the choropleths told us<a class="anchor-link" href="#What-the-choropleths-told-us">¶</a></h3><ul>
+<li>The <strong>raw connection choropleths</strong> light up exactly where expected — BosWash, Chicago, the Bay Area + LA, Texas Triangle, Front Range, Florida — confirming that the absolute connection counts track population.</li>
+<li>The <strong>coverage choropleth</strong> ($s_i = |S_i|/N_i$) is more revealing: coverage spans roughly $0.34\!-\!0.63$ across counties, with higher coverage in dense, younger, more-online counties (urban Northeast, Pacific coast, parts of the Mountain West) and lower coverage in much of the rural South and Plains. This is exactly the kind of <em>geographically heterogeneous undercount</em> the <em>Schläpfer</em> rescaling step is designed to absorb.</li>
+<li>The <strong>per-user choropleths</strong> — connections divided by Facebook MAU — are visibly <strong>flatter</strong> than the raw-count choropleths. That's the qualitative confirmation that rescaling by $s_i$ has done its job: once we strip out the population-driven baseline, per-user connectivity is no longer dominated by where the people are.</li>
+</ul>
+<h3 id="What-the-demographic-figures-told-us">What the demographic figures told us<a class="anchor-link" href="#What-the-demographic-figures-told-us">¶</a></h3><p>The Census-block analyses in the Demographics section sit at a completely different scale from the national regressions, but they're the bridge to the CLIMA application:</p>
+<ul>
+<li><strong>Hamilton + Howard Beach</strong> (Queens) skews older than the NYC average, is ~63% owner-occupied vs. ~51% citywide, and has a household-size distribution shifted toward 3-4-person households. Education is bottom-heavy: ~30% no HS diploma, ~26% only HS, ~24% bachelor's-or-higher.</li>
+<li><strong>Red Hook</strong> (Brooklyn) is markedly different — more bachelor's-and-above (~32%), a notably bimodal income distribution with a much fatter upper tail (~30% over $100k), and a different racial composition. The two communities sit in the same FEMA flood-zone designations but represent very different <em>social</em> exposures.</li>
+<li>These contrasts are the reason CLIMA's modeling can't treat "coastal homeowner" as a uniform population class — the same flood event will produce very different decision cascades depending on tenure, income, and community structure.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -11742,11 +11710,17 @@ Total housing units: 65
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Future-Work:">Future Work:<a class="anchor-link" href="#Future-Work:">¶</a></h2><ul>
-<li>After reading <a href="https://doi.org/10.1038/nature10856">A Universal Model for Mobility and Migration Patterns</a>, we began to formulate a model using FEMA's Flood Risk Index as part of our benefit distribution, and considered the ratio of available homes rather than the ratio of available jobs.</li>
+<h2 id="Future-Work">Future Work<a class="anchor-link" href="#Future-Work">¶</a></h2><ul>
+<li><strong>Mobility model with flood-risk benefits.</strong> After reading <a href="https://doi.org/10.1038/nature10856"><em>A Universal Model for Mobility and Migration Patterns</em> (Simini et al., 2012)</a>, we began formulating a model using FEMA's National Risk Index as part of the benefit-distribution term, with the <em>ratio of available homes</em> (rather than the radiation model's ratio of available jobs) as the relevant opportunity surface for homeowner relocation decisions. The scaling exponents in this notebook are an empirical input to that model — they parameterize how <em>fast</em> information about flood events can propagate through a community of a given size.</li>
+<li><strong>Re-attempt community identification.</strong> The Clique Percolation Method (CPM) on the symmetric ~10M-row edge list exhausted available RAM mid-build. A memory-frugal variant — e.g., Louvain on the bipartite county-user projection, or CPM restricted to within-CBSA edges — should be tractable on a higher-memory machine and would give us a third lens (mesoscale community structure) on top of the scaling and demographic analyses.</li>
+<li><strong>Broaden the demographic comparison.</strong> Extend the block-level demographic snapshots beyond Hamilton Beach / Howard Beach / Red Hook to the full set of NYC waterfront census tracts under FEMA 100-year and 500-year designations, so the scaling and demographic strands can be joined into a single block-level vulnerability picture.</li>
+<li><strong>Cross-validate ESRI MAU.</strong> ESRI's <code>MP19049a_B</code> is a model output; the most natural cross-check would be against state-level Pew Research surveys on Facebook adoption rates, which would let us calibrate the ~17% gap between our average $s_i$ and Meta's published MAU coverage figure.</li>
 </ul>
-<h2 id="Potential-Problems:">Potential Problems:<a class="anchor-link" href="#Potential-Problems:">¶</a></h2><ul>
-<li>Despite thoroughly searching, official user estimates at the county level are not made publically available. When comparing our coverage estimates with the MAU and DAU presented earlier, we can see that our data's coverage estimate tends to be lower than the true coverage estimate by about 17%. This difference would affect our results when we rescale a GEOID's connections by dividing by that GEOID's connections by the GEOID's user_estimate. Thus, dividing by a larger percentage would cause the number of connections to go down while population remains unchanged, causing $\beta$ to likely decrease and potentially be even more sublinear.</li>
+<h2 id="Potential-Problems">Potential Problems<a class="anchor-link" href="#Potential-Problems">¶</a></h2><ul>
+<li><strong>County-level Facebook MAU is not publicly reported by Meta.</strong> ESRI is our best stand-in, but comparing our derived average $s_i$ against Meta's published Q4 '22 MAU figure suggests the ESRI-derived coverage runs ~17% below the true MAU coverage. A uniform underestimate would shift the intercept $\gamma$ but leave $\beta$ unchanged in expectation; however, because ESRI's MAU model is itself geographically heterogeneous (undercounting more in certain county types than others), there is a second-order effect on $\beta$ that's harder to bound. The most plausible direction is a small <em>decrease</em> in $\beta$ — i.e., the true scaling is slightly <em>more</em> sublinear than what we report for Outgoing and Total.</li>
+<li><strong>SCI itself is noised.</strong> Gaussian noise in $\pm[0,1]$ is added by Meta to the raw connection counts to preserve privacy. For large counties this is invisible, but for the lowest-user counties (just above the 50,000-user reporting threshold) it can dominate the signal — this is part of why the muSA confidence intervals are wider.</li>
+<li><strong>ESRI MAU is a model output</strong>, not a direct count — so two layers of estimation (Meta's true MAU → ESRI's modeled MAU → our $|S_i|$) sit between the underlying truth and the regressor.</li>
+<li><strong>The demographic figures are descriptive.</strong> Three communities ≠ a generalizable claim about coastal NYC. We use these blocks to ground the modeling work in concrete cases, not to extrapolate to broader populations.</li>
 </ul>
 <hr/>
 </div>
@@ -11766,29 +11740,33 @@ Total housing units: 65
 <li><a href="https://data.humdata.org/dataset/e9988552-74e4-4ff4-943f-c782ac8bca87/resource/c59fd5ac-0458-4e83-b6be-5334f0ea9a69/download/us-counties-us-counties-fb-social-connectedness-index-october-2021.zip">County-to-County SCI Dataset</a></li>
 </ul>
 <h3 id="Meta-Official-Regional-Coverage-Estimates">Meta Official Regional Coverage Estimates<a class="anchor-link" href="#Meta-Official-Regional-Coverage-Estimates">¶</a></h3><ul>
-<li><a href="https://s21.q4cdn.com/399680738/files/doc_financials/2023/q4/Earnings-Presentation-Q4-2023.pdf">Meta Q4 ’22 Earnings Presentation</a></li>
+<li><a href="https://s21.q4cdn.com/399680738/files/doc_financials/2023/q4/Earnings-Presentation-Q4-2023.pdf">Meta Q4 '22 Earnings Presentation</a></li>
 </ul>
 <h3 id="ESRI-Facebook-User-Estimates">ESRI Facebook User Estimates<a class="anchor-link" href="#ESRI-Facebook-User-Estimates">¶</a></h3><ul>
 <li><a href="https://nyuds.maps.arcgis.com/home/item.html?id=14a2fb32e22b4fe5ab9d884c9e994075">ESRI Data</a></li>
 <li><a href="https://demographics5.arcgis.com/arcgis/rest/services/USA_MPI_1_2022/MapServer/7">ESRI Documentation</a></li>
 </ul>
 <h3 id="Crosswalk">Crosswalk<a class="anchor-link" href="#Crosswalk">¶</a></h3><ul>
-<li><a href="https://www.bls.gov/cew/classifications/areas/county-msa-csa-crosswalk.html">County–MSA–CSA Crosswalk</a></li>
+<li><a href="https://www.bls.gov/cew/classifications/areas/county-msa-csa-crosswalk.html">County-MSA-CSA Crosswalk</a></li>
+</ul>
+<h3 id="Census-/-Demographic-Data">Census / Demographic Data<a class="anchor-link" href="#Census-/-Demographic-Data">¶</a></h3><ul>
+<li><a href="https://www.nhgis.org/">IPUMS NHGIS — 2020 DHC and ACS extracts</a></li>
+<li><a href="https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html">TIGER/Line Shapefiles (2021)</a></li>
 </ul>
 <h2 id="Bibliography">Bibliography<a class="anchor-link" href="#Bibliography">¶</a></h2><ol>
-<li><p>Bailey, Michael, Rachel Cao, Theresa Kuchler, Johannes Stroebel, and Arlene Wong.<br/>
-<strong>“Social Connectedness: Measurement, Determinants, and Effects.”</strong><br/>
-<em>Journal of Economic Perspectives</em> 32, no. 3 (August 2018): 259–280.<br/>
+<li><p>Bailey, Michael, Rachel Cao, Theresa Kuchler, Johannes Stroebel, and Arlene Wong.
+<strong>"Social Connectedness: Measurement, Determinants, and Effects."</strong>
+<em>Journal of Economic Perspectives</em> 32, no. 3 (August 2018): 259-280.
 DOI: <a href="https://doi.org/10.1257/jep.32.3.259">10.1257/jep.32.3.259</a></p>
 </li>
-<li><p>Schläpfer, M., Bettencourt, L. M. A., Grauwin, S., Raschke, M., Claxton, R., Smoreda, Z., West, G. B., &amp; Ratti, C. (2014).<br/>
-<strong>The scaling of human interactions with city size.</strong><br/>
-<em>Journal of the Royal Society Interface</em>, <strong>11</strong>(98), 20130789.<br/>
+<li><p>Schläpfer, M., Bettencourt, L. M. A., Grauwin, S., Raschke, M., Claxton, R., Smoreda, Z., West, G. B., &amp; Ratti, C. (2014).
+<strong>The scaling of human interactions with city size.</strong>
+<em>Journal of the Royal Society Interface</em>, <strong>11</strong>(98), 20130789.
 DOI: <a href="https://doi.org/10.1098/rsif.2013.0789">10.1098/rsif.2013.0789</a></p>
 </li>
-<li><p>Simini, F., González, M., Maritan, A., et al.<br/>
-<strong>A universal model for mobility and migration patterns.</strong><br/>
-<em>Nature</em> <strong>484</strong>, 96–100 (2012).<br/>
+<li><p>Simini, F., González, M., Maritan, A., et al.
+<strong>A universal model for mobility and migration patterns.</strong>
+<em>Nature</em> <strong>484</strong>, 96-100 (2012).
 DOI: <a href="https://doi.org/10.1038/nature10856">10.1038/nature10856</a></p>
 </li>
 </ol>
