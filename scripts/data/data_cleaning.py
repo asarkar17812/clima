@@ -61,6 +61,43 @@ df_crosswalk = pd.read_excel('F:\\dsl_CLIMA\\projects\\submittable\\clima\\sourc
 df_crosswalk = df_crosswalk.iloc[:-3]
 df_crosswalk['FIPS'] = df_crosswalk['FIPS State Code'] + df_crosswalk['FIPS County Code']
 df_crosswalk['FIPS'] = df_crosswalk['FIPS'].astype(str).str.zfill(5)
+
+# Connecticut reorganization (2023): the Census Bureau replaced
+# Connecticut's eight historical counties with nine Council-of-
+# Governments planning regions as the new "county-equivalent" units.
+# The October 2021 SCI and the 2022 ESRI user/population estimates
+# both predate this transition and use the original eight-county FIPS
+# codes (09001 Fairfield through 09015 Windham). When the BLS crosswalk
+# vintage carries the new planning-region FIPS (09110..09190) instead,
+# we remap each new code back to the historical county it overlaps
+# most heavily with so the crosswalk joins cleanly against the SCI and
+# ESRI tables. The mapping follows the dominant geographic overlap
+# reported in the official Census Bureau crosswalk between the two
+# vintages; the two planning regions that straddle more than one
+# historical county (Naugatuck Valley and Western Connecticut) are
+# assigned to the county containing the larger share of their 2020
+# population. After the remap we drop the duplicate rows that the
+# many-to-one collapse creates (e.g., both 09110 and the original 09003
+# Hartford mapping to 09003), keeping the first crosswalk entry for
+# each FIPS. This is the mirror image of the Alaska reorganization
+# below: Alaska had two areas merge into one, Connecticut had eight
+# areas split into nine, and in both cases we collapse the post-
+# transition vintage back to the pre-transition FIPS so the rest of
+# the pipeline sees a single consistent geography.
+ct_planning_to_county = {
+    '09110': '09003',  # Capitol Region -> Hartford
+    '09120': '09001',  # Greater Bridgeport -> Fairfield
+    '09130': '09007',  # Lower CT River Valley -> Middlesex
+    '09140': '09009',  # Naugatuck Valley -> New Haven (dominant overlap)
+    '09150': '09015',  # Northeastern CT -> Windham
+    '09160': '09005',  # Northwest Hills -> Litchfield
+    '09170': '09009',  # South Central CT -> New Haven
+    '09180': '09011',  # Southeastern CT -> New London
+    '09190': '09001',  # Western CT -> Fairfield (dominant overlap)
+}
+df_crosswalk['FIPS'] = df_crosswalk['FIPS'].replace(ct_planning_to_county)
+df_crosswalk = df_crosswalk.drop_duplicates(subset=['FIPS'], keep='first')
+
 df_crosswalk = df_crosswalk[['FIPS', 'CBSA Code', 'Metropolitan/Micropolitan Statistical Area', 'CBSA Title']].copy()
 
 # ----------------------------------------------------------------------
